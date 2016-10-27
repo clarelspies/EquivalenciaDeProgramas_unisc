@@ -1,10 +1,16 @@
 package com.equivalencia.modelo;
 
-public enum TipoInstrucao {
+public enum TipoInstrucaoComposta {
 	TESTE {
 
 	},
 	OPERACAO {
+
+	},
+	PARADA {
+
+	},
+	CICLO {
 
 	}
 

@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import com.equivalencia.modelo.InstrucaoRotuladaSimples;
-import com.equivalencia.modelo.TipoInstrucao;
+import com.equivalencia.modelo.TipoInstrucaoSimples;
 
 public class InstrucaoRotuladaSimplesTeste {
 
@@ -21,7 +21,7 @@ public class InstrucaoRotuladaSimplesTeste {
 
 		// TESTE COM INSTRUCAO VALIDA, UMA ENTRADA PERFEITA DE TESTE.
 		String teste1 = "SE T1 VA-PARA 2 SENAO-va-para 3";
-		assertEquals(TipoInstrucao.TESTE, InstrucaoRotuladaSimples.criaInstrucaoAtravesEntradaUsuario(teste1).getTipo());
+		assertEquals(TipoInstrucaoSimples.TESTE, InstrucaoRotuladaSimples.criaInstrucaoAtravesEntradaUsuario(teste1).getTipo());
 		assertEquals(2, InstrucaoRotuladaSimples.criaInstrucaoAtravesEntradaUsuario(teste1).getDestinoTesteVerdadeiro());
 		assertEquals(3, InstrucaoRotuladaSimples.criaInstrucaoAtravesEntradaUsuario(teste1).getDestinoTesteFalso());
 		assertEquals(true, InstrucaoRotuladaSimples.criaInstrucaoAtravesEntradaUsuario(teste1).isInstrucaoValida());
@@ -30,7 +30,7 @@ public class InstrucaoRotuladaSimplesTeste {
 		// TESTE COM UMA INSTRUCAO VALIDA, UMA ENTRADA PERFEITA DE OPERACAO
 		String teste2 = "FACA F VA-PARA 6";
 		assertEquals(true, InstrucaoRotuladaSimples.criaInstrucaoAtravesEntradaUsuario(teste2).isInstrucaoValida());
-		assertEquals(TipoInstrucao.OPERACAO, InstrucaoRotuladaSimples.criaInstrucaoAtravesEntradaUsuario(teste2).getTipo());
+		assertEquals(TipoInstrucaoSimples.OPERACAO, InstrucaoRotuladaSimples.criaInstrucaoAtravesEntradaUsuario(teste2).getTipo());
 		assertEquals(6, InstrucaoRotuladaSimples.criaInstrucaoAtravesEntradaUsuario(teste2).getDestinoOperacao());
 		assertEquals("F", InstrucaoRotuladaSimples.criaInstrucaoAtravesEntradaUsuario(teste2).getNomeInstrucao());
 

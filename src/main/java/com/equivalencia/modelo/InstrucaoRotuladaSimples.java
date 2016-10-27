@@ -3,7 +3,7 @@ package com.equivalencia.modelo;
 public class InstrucaoRotuladaSimples {
 
 	private boolean instrucaoValida;
-	private TipoInstrucao tipo;
+	private TipoInstrucaoSimples tipo;
 	private String nomeInstrucao;
 
 	private int destinoOperacao;
@@ -19,11 +19,11 @@ public class InstrucaoRotuladaSimples {
 		this.instrucaoValida = instrucaoValida;
 	}
 
-	public TipoInstrucao getTipo() {
+	public TipoInstrucaoSimples getTipo() {
 		return tipo;
 	}
 
-	public void setTipo(TipoInstrucao tipo) {
+	public void setTipo(TipoInstrucaoSimples tipo) {
 		this.tipo = tipo;
 	}
 
@@ -59,6 +59,12 @@ public class InstrucaoRotuladaSimples {
 		this.destinoTesteFalso = destinoTesteFalso;
 	}
 
+	// TODO
+	@Override
+	public String toString() {
+		return "";
+	}
+
 	public static InstrucaoRotuladaSimples criaInstrucaoAtravesEntradaUsuario(String entrada) {
 		InstrucaoRotuladaSimples instrucao = new InstrucaoRotuladaSimples();
 		instrucao.setInstrucaoValida(false);
@@ -69,14 +75,14 @@ public class InstrucaoRotuladaSimples {
 			instrucao.setNomeInstrucao(partes[1]);
 
 			if (partes[0].equals("SE")) {
-				instrucao.setTipo(TipoInstrucao.TESTE);
+				instrucao.setTipo(TipoInstrucaoSimples.TESTE);
 				instrucao.setDestinoTesteVerdadeiro(new Integer(partes[3]));
 				instrucao.setDestinoTesteFalso(new Integer(partes[5]));
 				if (entrada.contains("VA-PARA") && entrada.contains("SENAO-VA-PARA")) {
 					instrucao.setInstrucaoValida(true);
 				}
 			} else if (partes[0].equals("FACA")) {
-				instrucao.setTipo(TipoInstrucao.OPERACAO);
+				instrucao.setTipo(TipoInstrucaoSimples.OPERACAO);
 				instrucao.setDestinoOperacao(new Integer(partes[3]));
 				if (entrada.contains("VA-PARA") && !entrada.contains("SENAO-VA-PARA")) {
 					instrucao.setInstrucaoValida(true);
