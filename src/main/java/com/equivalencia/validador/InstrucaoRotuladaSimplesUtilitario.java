@@ -4,7 +4,7 @@ import com.equivalencia.modelo.InstrucaoRotuladaSimples;
 import com.equivalencia.modelo.TipoInstrucao;
 
 //USADA PARA CRIAR UMA INSTRUCAO ROTULADA SIMPLES A PARTIR DA ENTRADA DO USUARIO
-public class ValidadorInstrucaoRotuladaSimples {
+public class InstrucaoRotuladaSimplesUtilitario {
 
 	public static InstrucaoRotuladaSimples criaInstrucao(String entrada) {
 		InstrucaoRotuladaSimples instrucao = new InstrucaoRotuladaSimples();
