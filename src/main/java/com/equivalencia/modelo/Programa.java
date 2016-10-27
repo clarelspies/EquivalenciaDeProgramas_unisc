@@ -5,28 +5,25 @@ import java.util.List;
 
 public class Programa {
 
-	List<InstrucaoRotuladaSimples> instrucoesRotuladasSimples;
+	List<InstrucaoMonolitica> instrucoesRotuladasSimples;
 
-	// instancia do programa, a partir da entrada do usuario e montada as instrucoes rotuladas simples do programa
+	// instancia do programa, a partir da entrada de instrucoes monolitcas do usuario em formato STRING/TEXTO
 	public Programa(List<String> entradas) throws Exception {
 		this.instrucoesRotuladasSimples = new ArrayList<>();
 		// coloca null no index 0 da lista, para começar as intruções no index 1
 		instrucoesRotuladasSimples.add(null);
 
+		// cria objeto da instrucao monolitica
 		for (String entrada : entradas) {
-			InstrucaoRotuladaSimples instrucao = InstrucaoRotuladaSimples.criaInstrucaoAtravesEntradaUsuario(entrada);
+			InstrucaoMonolitica instrucao = InstrucaoMonolitica.criaObjetoInstrucaoAtravesEntradaUsuario(entrada);
 			instrucoesRotuladasSimples.add(instrucao);
 		}
 
 	}
 
-	// defini instrucoes rotuladas compostas a partir das intrucoes rotuladas simples, primeiro passo da equivalencia!
+	// defini instrucoes rotuladas compostas a partir das intrucoesmonoliticas, primeiro passo da equivalencia!
 	public void definiInstrucoesRotuladas() {
 
-	}
-
-	public List<InstrucaoRotuladaSimples> getInstrucoesRotuladasSimples() {
-		return instrucoesRotuladasSimples;
 	}
 
 }

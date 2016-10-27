@@ -17,8 +17,8 @@ public class ProgramaTeste {
 			entradas1.add("SE T1 VA-PARA 2 SENAO-va-para 3");
 			entradas1.add("FACA F VA-PARA 6");
 			entradas1.add("SE T2 VA-PARA 5 SENAO-VA-PARA 4");
-			entradas1.add("FACA G VA PARA 7"); // ROTULO INEXISTENTE = VAZIO/PARADA
-			entradas1.add("FACA F VA-PARA 0");// 0 = VAZIO/PARADA
+			entradas1.add("FACA G VA PARA 7");
+			entradas1.add("FACA F VA-PARA 0");
 			entradas1.add("SE T3 VA-PARA 4 SENAO-VA-PARA-1");
 
 			new Programa(entradas1);
@@ -37,8 +37,8 @@ public class ProgramaTeste {
 			entradas1.add("SE T1 VA-PARA 2 SENAO-va-para 3");
 			entradas1.add("FACA F VA-PARA 6");
 			entradas1.add("SE T2 VA-PARA 5 SENAO-VA-PARA 4");
-			entradas1.add("FACA G VA-PARA 7"); // ROTULO INEXISTENTE = VAZIO/PARADA
-			entradas1.add("FACA F VA PARA 0");// 0 = VAZIO/PARADA
+			entradas1.add("FACA G VA-PARA 7");
+			entradas1.add("FACA F VA PARA 0");
 			entradas1.add("SE T3 VA-PARA 4 SENAO-VA-PARA-1");
 
 			new Programa(entradas1);
@@ -57,8 +57,8 @@ public class ProgramaTeste {
 			entradas1.add("SE T1 VA-PARA 2 SENAO-va-para 3");
 			entradas1.add("FACA F VA-PARA 6");
 			entradas1.add("SE T2 VA-PARA 5 SENAO-VA-PARA 4");
-			entradas1.add("FACA G VA-PARA 7"); // ROTULO INEXISTENTE = VAZIO/PARADA
-			entradas1.add("FACA F VA-PARA 0");// 0 = VAZIO/PARADA
+			entradas1.add("FACA G VA-PARA 7");
+			entradas1.add("FACA F VA-PARA 0");
 			entradas1.add("SE T3 VA-PARA 4 SENAO-VA-PARA 1");
 
 			new Programa(entradas1);
