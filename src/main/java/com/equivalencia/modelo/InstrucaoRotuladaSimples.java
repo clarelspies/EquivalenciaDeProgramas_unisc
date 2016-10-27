@@ -1,8 +1,10 @@
 package com.equivalencia.modelo;
 
+import com.equivalencia.modelo.tipo.TipoInstrucao;
+
 public class InstrucaoRotuladaSimples {
 
-	private TipoInstrucaoSimples tipo;
+	private TipoInstrucao tipo;
 	private String nomeInstrucao;
 
 	private int destinoOperacao;
@@ -10,11 +12,11 @@ public class InstrucaoRotuladaSimples {
 	private int destinoTesteVerdadeiro;
 	private int destinoTesteFalso;
 
-	public TipoInstrucaoSimples getTipo() {
+	public TipoInstrucao getTipo() {
 		return tipo;
 	}
 
-	public void setTipo(TipoInstrucaoSimples tipo) {
+	public void setTipo(TipoInstrucao tipo) {
 		this.tipo = tipo;
 	}
 
@@ -66,14 +68,14 @@ public class InstrucaoRotuladaSimples {
 			instrucao.setNomeInstrucao(partes[1]);
 
 			if (partes[0].equals("SE")) {
-				instrucao.setTipo(TipoInstrucaoSimples.TESTE);
+				instrucao.setTipo(TipoInstrucao.TESTE);
 				instrucao.setDestinoTesteVerdadeiro(new Integer(partes[3]));
 				instrucao.setDestinoTesteFalso(new Integer(partes[5]));
 				if (entrada.contains("VA-PARA") && entrada.contains("SENAO-VA-PARA")) {
 					return instrucao;
 				}
 			} else if (partes[0].equals("FACA")) {
-				instrucao.setTipo(TipoInstrucaoSimples.OPERACAO);
+				instrucao.setTipo(TipoInstrucao.OPERACAO);
 				instrucao.setDestinoOperacao(new Integer(partes[3]));
 				if (entrada.contains("VA-PARA") && !entrada.contains("SENAO-VA-PARA")) {
 					return instrucao;

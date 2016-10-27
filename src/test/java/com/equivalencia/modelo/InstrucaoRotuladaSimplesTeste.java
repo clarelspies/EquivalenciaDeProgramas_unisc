@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import com.equivalencia.modelo.InstrucaoRotuladaSimples;
-import com.equivalencia.modelo.TipoInstrucaoSimples;
+import com.equivalencia.modelo.tipo.TipoInstrucao;
 
 public class InstrucaoRotuladaSimplesTeste {
 
@@ -70,7 +70,7 @@ public class InstrucaoRotuladaSimplesTeste {
 	public void teste_criaInstrucaoAtravesEntradaUsuario_6() {
 		try {
 			String teste1 = "SE T1 VA-PARA 2 SENAO-va-para 3";
-			assertEquals(TipoInstrucaoSimples.TESTE, InstrucaoRotuladaSimples.criaInstrucaoAtravesEntradaUsuario(teste1).getTipo());
+			assertEquals(TipoInstrucao.TESTE, InstrucaoRotuladaSimples.criaInstrucaoAtravesEntradaUsuario(teste1).getTipo());
 			assertEquals(2, InstrucaoRotuladaSimples.criaInstrucaoAtravesEntradaUsuario(teste1).getDestinoTesteVerdadeiro());
 			assertEquals(3, InstrucaoRotuladaSimples.criaInstrucaoAtravesEntradaUsuario(teste1).getDestinoTesteFalso());
 			assertEquals("T1", InstrucaoRotuladaSimples.criaInstrucaoAtravesEntradaUsuario(teste1).getNomeInstrucao());
@@ -86,7 +86,7 @@ public class InstrucaoRotuladaSimplesTeste {
 	public void teste_criaInstrucaoAtravesEntradaUsuario_7() {
 		try {
 			String teste2 = "FACA F VA-PARA 6";
-			assertEquals(TipoInstrucaoSimples.OPERACAO, InstrucaoRotuladaSimples.criaInstrucaoAtravesEntradaUsuario(teste2).getTipo());
+			assertEquals(TipoInstrucao.OPERACAO, InstrucaoRotuladaSimples.criaInstrucaoAtravesEntradaUsuario(teste2).getTipo());
 			assertEquals(6, InstrucaoRotuladaSimples.criaInstrucaoAtravesEntradaUsuario(teste2).getDestinoOperacao());
 			assertEquals("F", InstrucaoRotuladaSimples.criaInstrucaoAtravesEntradaUsuario(teste2).getNomeInstrucao());
 		} catch (Exception e) {
