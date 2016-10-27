@@ -2,7 +2,6 @@ package com.equivalencia.modelo;
 
 public class InstrucaoRotuladaSimples {
 
-	private boolean instrucaoValida;
 	private TipoInstrucaoSimples tipo;
 	private String nomeInstrucao;
 
@@ -10,14 +9,6 @@ public class InstrucaoRotuladaSimples {
 
 	private int destinoTesteVerdadeiro;
 	private int destinoTesteFalso;
-
-	public boolean isInstrucaoValida() {
-		return instrucaoValida;
-	}
-
-	public void setInstrucaoValida(boolean instrucaoValida) {
-		this.instrucaoValida = instrucaoValida;
-	}
 
 	public TipoInstrucaoSimples getTipo() {
 		return tipo;
@@ -65,9 +56,9 @@ public class InstrucaoRotuladaSimples {
 		return "";
 	}
 
-	public static InstrucaoRotuladaSimples criaInstrucaoAtravesEntradaUsuario(String entrada) {
+	public static InstrucaoRotuladaSimples criaInstrucaoAtravesEntradaUsuario(String entrada) throws Exception {
+		String entradaOriginal = entrada;
 		InstrucaoRotuladaSimples instrucao = new InstrucaoRotuladaSimples();
-		instrucao.setInstrucaoValida(false);
 		try {
 			entrada = entrada.replaceAll("  ", " ").toUpperCase().trim();
 			String partes[] = entrada.split(" ");
@@ -79,19 +70,20 @@ public class InstrucaoRotuladaSimples {
 				instrucao.setDestinoTesteVerdadeiro(new Integer(partes[3]));
 				instrucao.setDestinoTesteFalso(new Integer(partes[5]));
 				if (entrada.contains("VA-PARA") && entrada.contains("SENAO-VA-PARA")) {
-					instrucao.setInstrucaoValida(true);
+					return instrucao;
 				}
 			} else if (partes[0].equals("FACA")) {
 				instrucao.setTipo(TipoInstrucaoSimples.OPERACAO);
 				instrucao.setDestinoOperacao(new Integer(partes[3]));
 				if (entrada.contains("VA-PARA") && !entrada.contains("SENAO-VA-PARA")) {
-					instrucao.setInstrucaoValida(true);
+					return instrucao;
 				}
 			}
-
-			return instrucao;
+			// se chegar aqui, nao reconheceu instrucao
+			throw new Exception();
 		} catch (Exception e) {
-			return instrucao;
+			// erro generico, qualquer erro ocorrodio da esta mensagem/exception
+			throw new Exception("Instrução em formato incompatível, por favor verificar entrada: [" + entradaOriginal + "]");
 		}
 
 	}

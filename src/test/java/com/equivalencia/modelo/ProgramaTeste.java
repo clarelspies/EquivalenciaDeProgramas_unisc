@@ -11,7 +11,7 @@ public class ProgramaTeste {
 
 	// erro no rodulo 4 durante instanciacao do programa, "va para"
 	@Test
-	public void teste_Programa1() {
+	public void teste_Programa_1() {
 		try {
 			List<String> entradas1 = new ArrayList<>();
 			entradas1.add("SE T1 VA-PARA 2 SENAO-va-para 3");
@@ -23,7 +23,7 @@ public class ProgramaTeste {
 
 			new Programa(entradas1);
 		} catch (Exception e) {
-			String message = "Instrução em formato incompatível, por favor verificar entrada: 4";
+			String message = "Instrução em formato incompatível, por favor verificar entrada: [FACA G VA PARA 7]";
 			assertEquals(message, e.getMessage());
 		}
 
@@ -31,7 +31,7 @@ public class ProgramaTeste {
 
 	// erro no rodulo 5 durante instanciacao do programa, "va para"
 	@Test
-	public void teste_Programa2() {
+	public void teste_Programa_2() {
 		try {
 			List<String> entradas1 = new ArrayList<>();
 			entradas1.add("SE T1 VA-PARA 2 SENAO-va-para 3");
@@ -43,7 +43,7 @@ public class ProgramaTeste {
 
 			new Programa(entradas1);
 		} catch (Exception e) {
-			String message = "Instrução em formato incompatível, por favor verificar entrada: 5";
+			String message = "Instrução em formato incompatível, por favor verificar entrada: [FACA F VA PARA 0]";
 			assertEquals(message, e.getMessage());
 		}
 
@@ -51,7 +51,7 @@ public class ProgramaTeste {
 
 	// nenhum erro, intrucoes de entrada corretas
 	@Test
-	public void teste_Programa3() {
+	public void teste_Programa_3() {
 		try {
 			List<String> entradas1 = new ArrayList<>();
 			entradas1.add("SE T1 VA-PARA 2 SENAO-va-para 3");
@@ -63,7 +63,7 @@ public class ProgramaTeste {
 
 			new Programa(entradas1);
 		} catch (Exception e) {
-			String message = "Instrução em formato incompatível, por favor verificar entrada: 5";
+			String message = "";
 			assertEquals(message, e.getMessage());
 		}
 

@@ -9,46 +9,102 @@ import com.equivalencia.modelo.TipoInstrucaoSimples;
 
 public class InstrucaoRotuladaSimplesTeste {
 
-	// TESTES USADAS NA CRIACAO DA INSTRUCAO-ROTULADA-SIMPLES, TAMBEM VERIFICA
-	// SE A ENTRADA ESTÁ CONFORME O USUARI OESPERA ATRAVÉS DE TESTES UNITÁRIOS!
 	@Test
-	public void teste_criaInstrucao() {
-		// TESTES COM ENTRADAS PERDIDAS, SEM PARAMETROS SUFICIENTES
-		assertEquals(false, InstrucaoRotuladaSimples.criaInstrucaoAtravesEntradaUsuario(null).isInstrucaoValida());
-		assertEquals(false, InstrucaoRotuladaSimples.criaInstrucaoAtravesEntradaUsuario("").isInstrucaoValida());
-		assertEquals(false, InstrucaoRotuladaSimples.criaInstrucaoAtravesEntradaUsuario(" ").isInstrucaoValida());
-		assertEquals(false, InstrucaoRotuladaSimples.criaInstrucaoAtravesEntradaUsuario("A").isInstrucaoValida());
+	public void teste_criaInstrucaoAtravesEntradaUsuario_1() {
+		try {
+			InstrucaoRotuladaSimples.criaInstrucaoAtravesEntradaUsuario(null);
+		} catch (Exception e) {
+			String message = "Instrução em formato incompatível, por favor verificar entrada: [null]";
+			assertEquals(message, e.getMessage());
+		}
 
-		// TESTE COM INSTRUCAO VALIDA, UMA ENTRADA PERFEITA DE TESTE.
-		String teste1 = "SE T1 VA-PARA 2 SENAO-va-para 3";
-		assertEquals(TipoInstrucaoSimples.TESTE, InstrucaoRotuladaSimples.criaInstrucaoAtravesEntradaUsuario(teste1).getTipo());
-		assertEquals(2, InstrucaoRotuladaSimples.criaInstrucaoAtravesEntradaUsuario(teste1).getDestinoTesteVerdadeiro());
-		assertEquals(3, InstrucaoRotuladaSimples.criaInstrucaoAtravesEntradaUsuario(teste1).getDestinoTesteFalso());
-		assertEquals(true, InstrucaoRotuladaSimples.criaInstrucaoAtravesEntradaUsuario(teste1).isInstrucaoValida());
-		assertEquals("T1", InstrucaoRotuladaSimples.criaInstrucaoAtravesEntradaUsuario(teste1).getNomeInstrucao());
+	}
 
-		// TESTE COM UMA INSTRUCAO VALIDA, UMA ENTRADA PERFEITA DE OPERACAO
-		String teste2 = "FACA F VA-PARA 6";
-		assertEquals(true, InstrucaoRotuladaSimples.criaInstrucaoAtravesEntradaUsuario(teste2).isInstrucaoValida());
-		assertEquals(TipoInstrucaoSimples.OPERACAO, InstrucaoRotuladaSimples.criaInstrucaoAtravesEntradaUsuario(teste2).getTipo());
-		assertEquals(6, InstrucaoRotuladaSimples.criaInstrucaoAtravesEntradaUsuario(teste2).getDestinoOperacao());
-		assertEquals("F", InstrucaoRotuladaSimples.criaInstrucaoAtravesEntradaUsuario(teste2).getNomeInstrucao());
+	@Test
+	public void teste_criaInstrucaoAtravesEntradaUsuario_2() {
+		try {
+			InstrucaoRotuladaSimples.criaInstrucaoAtravesEntradaUsuario("");
+		} catch (Exception e) {
+			String message = "Instrução em formato incompatível, por favor verificar entrada: []";
+			assertEquals(message, e.getMessage());
+		}
 
-		// TESTE ONDE A ENTRADA E INVALIDA, POIS ESPERA-SE SENAO-VA-PARA 3 AO INVES DE SENAO 3
-		String teste3 = "SE T1 VA-PARA 2 SENAO 3";
-		assertEquals(false, InstrucaoRotuladaSimples.criaInstrucaoAtravesEntradaUsuario(teste3).isInstrucaoValida());
+	}
 
-		// TESTE ONDE A ENTRADA E INVALIDA, POS ESPERA-SE VA-PARA AO INVES DE VA-PAA
-		String teste4 = "FACA F VA-PAA 6";
-		assertEquals(false, InstrucaoRotuladaSimples.criaInstrucaoAtravesEntradaUsuario(teste4).isInstrucaoValida());
+	@Test
+	public void teste_criaInstrucaoAtravesEntradaUsuario_3() {
+		try {
+			InstrucaoRotuladaSimples.criaInstrucaoAtravesEntradaUsuario(" ");
+		} catch (Exception e) {
+			String message = "Instrução em formato incompatível, por favor verificar entrada: [ ]";
+			assertEquals(message, e.getMessage());
+		}
 
-		// TESTE DE INSTRUCAO INCOMPLETA
-		String teste5 = "FACA 6";
-		assertEquals(false, InstrucaoRotuladaSimples.criaInstrucaoAtravesEntradaUsuario(teste5).isInstrucaoValida());
+	}
 
-		// TESTE ONDE ESPERA-SE FACA AO INVES DE FAA NO INICIO DA INSTRUCAO, PARA REPRESENTAR UMA OPERACAO
-		String teste6 = "FAA F VA-PARA 6";
-		assertEquals(false, InstrucaoRotuladaSimples.criaInstrucaoAtravesEntradaUsuario(teste6).isInstrucaoValida());
+	@Test
+	public void teste_criaInstrucaoAtravesEntradaUsuario_4() {
+		try {
+			InstrucaoRotuladaSimples.criaInstrucaoAtravesEntradaUsuario("A");
+		} catch (Exception e) {
+			String message = "Instrução em formato incompatível, por favor verificar entrada: [A]";
+			assertEquals(message, e.getMessage());
+		}
+
+	}
+
+	// TESTE ONDE A ENTRADA E INVALIDA, POIS ESPERA-SE SENAO-VA-PARA 3 AO INVES DE SENAO 3
+	@Test
+	public void teste_criaInstrucaoAtravesEntradaUsuario_5() {
+		try {
+			InstrucaoRotuladaSimples.criaInstrucaoAtravesEntradaUsuario("SE T1 VA-PARA 2 SENAO 3");
+		} catch (Exception e) {
+			String message = "Instrução em formato incompatível, por favor verificar entrada: [SE T1 VA-PARA 2 SENAO 3]";
+			assertEquals(message, e.getMessage());
+		}
+
+	}
+
+	// TESTE ONDE NAO E ESPERADO ERRO 1
+	@Test
+	public void teste_criaInstrucaoAtravesEntradaUsuario_6() {
+		try {
+			String teste1 = "SE T1 VA-PARA 2 SENAO-va-para 3";
+			assertEquals(TipoInstrucaoSimples.TESTE, InstrucaoRotuladaSimples.criaInstrucaoAtravesEntradaUsuario(teste1).getTipo());
+			assertEquals(2, InstrucaoRotuladaSimples.criaInstrucaoAtravesEntradaUsuario(teste1).getDestinoTesteVerdadeiro());
+			assertEquals(3, InstrucaoRotuladaSimples.criaInstrucaoAtravesEntradaUsuario(teste1).getDestinoTesteFalso());
+			assertEquals("T1", InstrucaoRotuladaSimples.criaInstrucaoAtravesEntradaUsuario(teste1).getNomeInstrucao());
+		} catch (Exception e) {
+			String message = "";
+			assertEquals(message, e.getMessage());
+		}
+
+	}
+
+	// TESTE ONDE NAO E ESPERADO ERRO 2
+	@Test
+	public void teste_criaInstrucaoAtravesEntradaUsuario_7() {
+		try {
+			String teste2 = "FACA F VA-PARA 6";
+			assertEquals(TipoInstrucaoSimples.OPERACAO, InstrucaoRotuladaSimples.criaInstrucaoAtravesEntradaUsuario(teste2).getTipo());
+			assertEquals(6, InstrucaoRotuladaSimples.criaInstrucaoAtravesEntradaUsuario(teste2).getDestinoOperacao());
+			assertEquals("F", InstrucaoRotuladaSimples.criaInstrucaoAtravesEntradaUsuario(teste2).getNomeInstrucao());
+		} catch (Exception e) {
+			String message = "";
+			assertEquals(message, e.getMessage());
+		}
+
+	}
+
+	@Test
+	public void teste_criaInstrucaoAtravesEntradaUsuario_8() {
+		try {
+			InstrucaoRotuladaSimples.criaInstrucaoAtravesEntradaUsuario("FAA F VA-PARA 6");
+		} catch (Exception e) {
+			String message = "Instrução em formato incompatível, por favor verificar entrada: [FAA F VA-PARA 6]";
+			assertEquals(message, e.getMessage());
+		}
+
 	}
 
 }
