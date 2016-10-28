@@ -122,4 +122,37 @@ public class InstrucaoMonoliticaTeste {
 
 	}
 
+	// TESTE COM INSTRUCAO TESTE
+	@Test
+	public void teste_buscaIndexProximaInstrucaoExecutada_1() {
+		try {
+
+			InstrucaoMonolitica instrucao = InstrucaoMonolitica.criaObjetoInstrucaoAtravesEntradaUsuario("SE T1 VA-PARA 2 SENAO-va-para 3");
+
+			assertEquals(2, instrucao.buscaIndexProximaInstrucaoExecutada(true));
+			assertEquals(3, instrucao.buscaIndexProximaInstrucaoExecutada(false));
+
+		} catch (Exception e) {
+			String message = "";
+			assertEquals(message, e.getMessage());
+		}
+	}
+
+	// TESTE COM INSTRUCAO OPERACAO
+	@Test
+	public void teste_buscaIndexProximaInstrucaoExecutada_2() {
+		try {
+
+			InstrucaoMonolitica instrucao = InstrucaoMonolitica.criaObjetoInstrucaoAtravesEntradaUsuario("FACA F VA-PARA 6");
+
+			assertEquals(6, instrucao.buscaIndexProximaInstrucaoExecutada(true));
+			assertEquals(6, instrucao.buscaIndexProximaInstrucaoExecutada(false));
+
+		} catch (Exception e) {
+			String message = "";
+			assertEquals(message, e.getMessage());
+		}
+
+	}
+
 }

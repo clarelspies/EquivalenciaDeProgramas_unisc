@@ -94,4 +94,21 @@ public class InstrucaoMonolitica {
 
 	}
 
+	public int buscaIndexProximaInstrucaoExecutada(boolean primeiroConjunto) {
+
+		// SE FOR OPERACAO, NAO IMPORTA SE É PRIMEIRO OU SEGUNDO CONJUNTO.. O RESULTADO É IGUAL.
+		if (this.getTipo() == TipoInstrucao.OPERACAO) {
+			return this.getDestinoOperacao();
+		} else {
+			// SE FOR TESTE, A PRIMEIRA COLUNA REPRESENTA VERDADEIRO E A SEGUNDA FALSO.
+
+			if (primeiroConjunto) {
+				return this.getDestinoTesteVerdadeiro();
+			} else {
+				return this.getDestinoTesteFalso();
+			}
+		}
+
+	}
+
 }
