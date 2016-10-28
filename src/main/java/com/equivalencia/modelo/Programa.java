@@ -11,7 +11,7 @@ public class Programa {
 	public Programa(List<String> entradas) throws Exception {
 		this.instrucoesMonoliticas = new ArrayList<>();
 		// coloca null no index 0 da lista, para começar as intruções no index 1
-		instrucoesMonoliticas.add(null);
+		instrucoesMonoliticas.add(new InstrucaoMonolitica());
 
 		// cria objeto da instrucao monolitica
 		for (String entrada : entradas) {

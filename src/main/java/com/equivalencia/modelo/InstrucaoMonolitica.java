@@ -13,6 +13,11 @@ public class InstrucaoMonolitica {
 	private int destinoTesteVerdadeiro;
 	private int destinoTesteFalso;
 
+	public InstrucaoMonolitica() {
+		this.tipo = TipoInstrucao.PARTIDA;
+		this.destinoOperacao = 1;
+	}
+
 	public String getIdentificador() {
 		return identificador;
 	}
@@ -97,11 +102,10 @@ public class InstrucaoMonolitica {
 	public int buscaIndexProximaInstrucaoExecutada(boolean primeiroConjunto) {
 
 		// SE FOR OPERACAO, NAO IMPORTA SE É PRIMEIRO OU SEGUNDO CONJUNTO.. O RESULTADO É IGUAL.
-		if (this.getTipo() == TipoInstrucao.OPERACAO) {
+		if (this.getTipo() == TipoInstrucao.OPERACAO || this.getTipo() == TipoInstrucao.PARTIDA) {
 			return this.getDestinoOperacao();
 		} else {
 			// SE FOR TESTE, A PRIMEIRA COLUNA REPRESENTA VERDADEIRO E A SEGUNDA FALSO.
-
 			if (primeiroConjunto) {
 				return this.getDestinoTesteVerdadeiro();
 			} else {

@@ -10,6 +10,9 @@ public enum TipoInstrucao {
 	PARADA {
 
 	},
+	PARTIDA {
+
+	},
 	CICLO {
 
 	}
