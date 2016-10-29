@@ -2,6 +2,9 @@ package com.equivalencia.modelo;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 
 import com.equivalencia.modelo.InstrucaoMonolitica;
@@ -146,6 +149,66 @@ public class InstrucaoMonoliticaTeste {
 
 			assertEquals(6, instrucao.buscaIndexProximaInstrucaoExecutada(true));
 			assertEquals(6, instrucao.buscaIndexProximaInstrucaoExecutada(false));
+		} catch (Exception e) {
+			String message = "";
+			assertEquals(message, e.getMessage());
+		}
+
+	}
+
+	// erro no rodulo 4 durante instanciacao do programa, "va para"
+	@Test
+	public void teste_criaListaInstrucoesMonoliticasParaPrograma_1() {
+		try {
+			List<String> entradas1 = new ArrayList<>();
+			entradas1.add("SE T1 VA-PARA 2 SENAO-va-para 3");
+			entradas1.add("FACA F VA-PARA 6");
+			entradas1.add("SE T2 VA-PARA 5 SENAO-VA-PARA 4");
+			entradas1.add("FACA G VA PARA 7");
+			entradas1.add("FACA F VA-PARA 0");
+			entradas1.add("SE T3 VA-PARA 4 SENAO-VA-PARA-1");
+
+			InstrucaoMonolitica.criaListaInstrucoesMonoliticasParaPrograma(entradas1);
+		} catch (Exception e) {
+			String message = "Instrução em formato incompatível, por favor verificar entrada: [FACA G VA PARA 7]";
+			assertEquals(message, e.getMessage());
+		}
+
+	}
+
+	// erro no rodulo 5 durante instanciacao do programa, "va para"
+	@Test
+	public void teste_criaListaInstrucoesMonoliticasParaPrograma_2() {
+		try {
+			List<String> entradas1 = new ArrayList<>();
+			entradas1.add("SE T1 VA-PARA 2 SENAO-va-para 3");
+			entradas1.add("FACA F VA-PARA 6");
+			entradas1.add("SE T2 VA-PARA 5 SENAO-VA-PARA 4");
+			entradas1.add("FACA G VA-PARA 7");
+			entradas1.add("FACA F VA PARA 0");
+			entradas1.add("SE T3 VA-PARA 4 SENAO-VA-PARA-1");
+
+			InstrucaoMonolitica.criaListaInstrucoesMonoliticasParaPrograma(entradas1);
+		} catch (Exception e) {
+			String message = "Instrução em formato incompatível, por favor verificar entrada: [FACA F VA PARA 0]";
+			assertEquals(message, e.getMessage());
+		}
+
+	}
+
+	// nenhum erro, intrucoes de entrada corretas
+	@Test
+	public void teste_criaListaInstrucoesMonoliticasParaPrograma_3() {
+
+		List<String> entradas1 = new ArrayList<>();
+		entradas1.add("SE T1 VA-PARA 2 SENAO-va-para 3");
+		entradas1.add("FACA F VA-PARA 6");
+		entradas1.add("SE T2 VA-PARA 5 SENAO-VA-PARA 4");
+		entradas1.add("FACA G VA-PARA 7");
+		entradas1.add("FACA F VA-PARA 0");
+		entradas1.add("SE T3 VA-PARA 4 SENAO-VA-PARA 1");
+		try {
+			InstrucaoMonolitica.criaListaInstrucoesMonoliticasParaPrograma(entradas1);
 		} catch (Exception e) {
 			String message = "";
 			assertEquals(message, e.getMessage());

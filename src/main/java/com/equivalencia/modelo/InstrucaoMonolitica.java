@@ -1,5 +1,8 @@
 package com.equivalencia.modelo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.equivalencia.modelo.tipo.TipoInstrucao;
 
 //modelo para sepresentar uma instrucao em formato monolitico
@@ -61,10 +64,14 @@ public class InstrucaoMonolitica {
 		this.destinoTesteFalso = destinoTesteFalso;
 	}
 
-	// TODO
-	@Override
-	public String toString() {
-		return "";
+	public static List<InstrucaoMonolitica> criaListaInstrucoesMonoliticasParaPrograma(List<String> entradas) throws Exception {
+		List<InstrucaoMonolitica> instrucoes = new ArrayList<>();
+		instrucoes.add(new InstrucaoMonolitica());
+		for (String entrada : entradas) {
+			InstrucaoMonolitica instrucao = InstrucaoMonolitica.criaObjetoInstrucaoAtravesEntradaUsuario(entrada);
+			instrucoes.add(instrucao);
+		}
+		return instrucoes;
 	}
 
 	public static InstrucaoMonolitica criaObjetoInstrucaoAtravesEntradaUsuario(String entrada) throws Exception {
