@@ -8,6 +8,9 @@ public class InstrucaoMonolitica {
 	private TipoInstrucao tipo;
 	private String identificador;
 
+	// conta qual o numero da operação!
+	private String rotuloOperacao;
+
 	private int destinoOperacao;
 
 	private int destinoTesteVerdadeiro;
@@ -113,6 +116,14 @@ public class InstrucaoMonolitica {
 			}
 		}
 
+	}
+
+	public String getRotuloOperacao() {
+		return rotuloOperacao;
+	}
+
+	public void setRotuloOperacao(String rotuloOperacao) {
+		this.rotuloOperacao = rotuloOperacao;
 	}
 
 }

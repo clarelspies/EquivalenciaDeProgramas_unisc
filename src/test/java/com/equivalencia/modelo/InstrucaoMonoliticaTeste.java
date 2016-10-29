@@ -142,12 +142,10 @@ public class InstrucaoMonoliticaTeste {
 	@Test
 	public void teste_buscaIndexProximaInstrucaoExecutada_2() {
 		try {
-
 			InstrucaoMonolitica instrucao = InstrucaoMonolitica.criaObjetoInstrucaoAtravesEntradaUsuario("FACA F VA-PARA 6");
 
 			assertEquals(6, instrucao.buscaIndexProximaInstrucaoExecutada(true));
 			assertEquals(6, instrucao.buscaIndexProximaInstrucaoExecutada(false));
-
 		} catch (Exception e) {
 			String message = "";
 			assertEquals(message, e.getMessage());
