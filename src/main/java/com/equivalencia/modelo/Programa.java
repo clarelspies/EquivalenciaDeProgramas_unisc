@@ -1,9 +1,9 @@
 package com.equivalencia.modelo;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.equivalencia.modelo.tipo.TipoInstrucao;
+import com.equivalencia.utilitarios.UtilitarioRotuloOperacoes;
 
 public class Programa {
 
@@ -16,85 +16,11 @@ public class Programa {
 		this.instrucoesMonoliticasPrograma2 = programa2;
 
 		// o 1 é a partida do programa 1
-		int comeco = 2;
+		int comeco = 1;
 
-		comeco = this.rotulaFuncoesDasInstrucoesMonoliticasPrograma1(comeco);
-		this.rotulaFuncoesDasInstrucoesMonoliticasPrograma2(comeco);
-	}
-
-	private int rotulaFuncoesDasInstrucoesMonoliticasPrograma2(int comeco) {
-		List<Integer> ordemTesteOperacao = new ArrayList<>();
-		comeco++;
-
-		for (InstrucaoMonolitica instrucao : this.instrucoesMonoliticasPrograma2) {
-			if (instrucao.getTipo() == TipoInstrucao.TESTE) {
-				ordemTesteOperacao.add(instrucao.getDestinoTesteVerdadeiro());
-			}
-		}
-
-		for (Integer indexTesteAtual : ordemTesteOperacao) {
-
-			try {
-				InstrucaoMonolitica instrucao = this.instrucoesMonoliticasPrograma2.get(indexTesteAtual.intValue());
-				if (instrucao.getTipo() == TipoInstrucao.OPERACAO) {
-					instrucao.setRotuloOperacao(String.valueOf(comeco));
-					this.instrucoesMonoliticasPrograma2.set(indexTesteAtual, instrucao);
-					comeco++;
-				}
-			} catch (Exception e) {
-				// as vezes o destino é uma operacao vazia/ nao existe o rotulo
-			}
-
-		}
-
-		int indexTesteAtual = 0;
-		for (InstrucaoMonolitica instrucao : this.instrucoesMonoliticasPrograma2) {
-			if (instrucao.getTipo() == TipoInstrucao.OPERACAO && instrucao.getRotuloOperacao() == null) {
-				instrucao.setRotuloOperacao(String.valueOf(comeco));
-				this.instrucoesMonoliticasPrograma2.set(indexTesteAtual, instrucao);
-				comeco++;
-			}
-			indexTesteAtual++;
-		}
-
-		return comeco;
-	}
-
-	private int rotulaFuncoesDasInstrucoesMonoliticasPrograma1(int comeco) {
-		List<Integer> ordemTesteOperacao = new ArrayList<>();
-
-		for (InstrucaoMonolitica instrucao : this.instrucoesMonoliticasPrograma1) {
-			if (instrucao.getTipo() == TipoInstrucao.TESTE) {
-				ordemTesteOperacao.add(instrucao.getDestinoTesteVerdadeiro());
-			}
-		}
-
-		for (Integer indexTesteAtual : ordemTesteOperacao) {
-
-			try {
-				InstrucaoMonolitica instrucao = this.instrucoesMonoliticasPrograma1.get(indexTesteAtual.intValue());
-				if (instrucao.getTipo() == TipoInstrucao.OPERACAO) {
-					instrucao.setRotuloOperacao(String.valueOf(comeco));
-					this.instrucoesMonoliticasPrograma1.set(indexTesteAtual, instrucao);
-					comeco++;
-				}
-			} catch (Exception e) {
-				// as vezes o destino é uma operacao vazia/ nao existe o rotulo
-			}
-
-		}
-
-		int indexTesteAtual = 0;
-		for (InstrucaoMonolitica instrucao : this.instrucoesMonoliticasPrograma1) {
-			if (instrucao.getTipo() == TipoInstrucao.OPERACAO && instrucao.getRotuloOperacao() == null) {
-				instrucao.setRotuloOperacao(String.valueOf(comeco));
-				this.instrucoesMonoliticasPrograma1.set(indexTesteAtual, instrucao);
-				comeco++;
-			}
-			indexTesteAtual++;
-		}
-
-		return comeco;
+		UtilitarioRotuloOperacoes utilitario = UtilitarioRotuloOperacoes.rotulaFuncoesDasInstrucoesMonoliticasPrograma(comeco, instrucoesMonoliticasPrograma1);
+		// o utilitario guarda o numero da proxima funcao, que sera a funcao de partida da segunda lista de instrucoes
+		UtilitarioRotuloOperacoes.rotulaFuncoesDasInstrucoesMonoliticasPrograma(utilitario.getContador(), instrucoesMonoliticasPrograma2);
 	}
 
 	// defini instrucoes rotuladas compostas a partir das intrucoesmonoliticas,
@@ -130,8 +56,6 @@ public class Programa {
 		InstrucaoMonolitica instrucaoInicial = instrucoesMonoliticas.get(posicaoInicial);
 		int indexInstrucaoEmTeste = instrucaoInicial.buscaIndexProximaInstrucaoExecutada(true);
 
-		boolean passouPelaPartida = false;
-
 		while (true) {
 			// cada percorrida, busca proxima!
 			InstrucaoMonolitica instrucaoEmTeste = null;
@@ -139,18 +63,8 @@ public class Programa {
 				instrucaoEmTeste = instrucoesMonoliticas.get(indexInstrucaoEmTeste);
 
 				if (instrucaoEmTeste.getTipo() == TipoInstrucao.PARTIDA) {
-					passouPelaPartida = true;
 					indexInstrucaoEmTeste = 1;
 					continue;
-				}
-
-				//COMENTARIO E TESTES ESTAO ERRADOS, PRECISA EXEMPLO
-				// se a isntrucao q buscar na lista for igual instrucaoAtual.. então hovue um loop! é um CICLO
-				if (posicaoInicial == indexInstrucaoEmTeste && passouPelaPartida == false) {
-				//	instrucaoComposta.setTipo1(TipoInstrucao.CICLO);
-				//	instrucaoComposta.setIdentificador1(TipoInstrucao.CICLO.getIdentificador(instrucaoEmTeste));
-				//	instrucaoComposta.setRotulo1(TipoInstrucao.CICLO.getRotulo(instrucaoEmTeste));
-				//	break;
 				}
 
 				// se a instrucao q buscar for OPERACAO, ACHOU!
@@ -179,12 +93,10 @@ public class Programa {
 			InstrucaoMonolitica instrucaoEmTeste = null;
 			try {
 				instrucaoEmTeste = instrucoesMonoliticas.get(indexInstrucaoEmTeste);
-				// se a isntrucao q buscar na lista for igual instrucaoAtual.. então hovue um loop! é um CICLO
-				if (posicaoInicial == indexInstrucaoEmTeste) {
-					instrucaoComposta.setTipo2(TipoInstrucao.CICLO);
-					instrucaoComposta.setIdentificador2(TipoInstrucao.CICLO.getIdentificador(instrucaoEmTeste));
-					instrucaoComposta.setRotulo2(TipoInstrucao.CICLO.getRotulo(instrucaoEmTeste));
-					break;
+
+				if (instrucaoEmTeste.getTipo() == TipoInstrucao.PARTIDA) {
+					indexInstrucaoEmTeste = 1;
+					continue;
 				}
 
 				// se a instrucao q buscar for OPERACAO, ACHOU!
