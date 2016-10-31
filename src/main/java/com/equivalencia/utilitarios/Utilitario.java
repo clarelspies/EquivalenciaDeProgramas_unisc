@@ -23,6 +23,7 @@ public class Utilitario {
 
 			if (instrucao.getTipo() == TipoInstrucao.TESTE) {
 				listaOrdemExecucaoOperacoes.add(instrucao.getDestinoTesteVerdadeiro());
+				listaOrdemExecucaoOperacoes.add(instrucao.getDestinoTesteFalso());
 			}
 
 			if (instrucao.getTipo() == TipoInstrucao.OPERACAO) {
@@ -37,7 +38,6 @@ public class Utilitario {
 		}
 
 		for (Integer indexTesteAtual : listaOrdemExecucaoOperacoes) {
-
 			try {
 				InstrucaoMonolitica instrucao = instrucoes.get(indexTesteAtual.intValue());
 				if (instrucao.getTipo() == TipoInstrucao.OPERACAO && instrucao.getRotuloOperacao() == null) {
@@ -48,17 +48,6 @@ public class Utilitario {
 			} catch (Exception e) {
 				// as vezes o destino é uma operacao vazia/ nao existe o rotulo
 			}
-
-		}
-
-		int indexTesteAtual = 0;
-		for (InstrucaoMonolitica instrucao : instrucoes) {
-			if (instrucao.getTipo() == TipoInstrucao.OPERACAO && instrucao.getRotuloOperacao() == null) {
-				instrucao.setRotuloOperacao(String.valueOf(this.contador));
-				instrucoes.set(indexTesteAtual, instrucao);
-				this.contador++;
-			}
-			indexTesteAtual++;
 		}
 
 		return instrucoes;
@@ -69,7 +58,6 @@ public class Utilitario {
 		InstrucaoMonolitica instrucaoInicial = instrucoesMonoliticas.get(posicaoInicial);
 
 		int executouEmLoop = 0;
-
 		boolean primeiraColuna = true;
 		boolean trocou = false;
 
@@ -81,9 +69,8 @@ public class Utilitario {
 			try {
 				instrucaoEmTeste = instrucoesMonoliticas.get(indexInstrucaoEmTeste);
 
-				// primeiro caso de loop, fica executando ele mesmo
-				// segundo caso de loop, fica executando testes encadeados
-				if (indexInstrucaoEmTeste == instrucaoEmTeste.buscaIndexProximaInstrucaoExecutada(primeiraColuna) || executouEmLoop > 50) {
+				// primeiro caso de loop, fica executando TESTES sem chegar a uma OPERACAO
+				if (executouEmLoop > 50) {
 					instrucaoComposta.setInstrucaoRotulada(TipoInstrucao.CICLO.getIdentificador(instrucaoEmTeste), TipoInstrucao.CICLO.getRotulo(instrucaoEmTeste), TipoInstrucao.CICLO);
 					executouEmLoop = 0;
 					primeiraColuna = false;
