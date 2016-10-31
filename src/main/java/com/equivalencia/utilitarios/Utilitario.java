@@ -6,7 +6,7 @@ import java.util.List;
 import com.equivalencia.modelo.InstrucaoMonolitica;
 import com.equivalencia.modelo.tipo.TipoInstrucao;
 
-public class UtilitarioRotuloOperacoes {
+public class Utilitario {
 
 	private int contador = 1;
 

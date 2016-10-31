@@ -3,7 +3,7 @@ package com.equivalencia.modelo;
 import java.util.List;
 
 import com.equivalencia.modelo.tipo.TipoInstrucao;
-import com.equivalencia.utilitarios.UtilitarioRotuloOperacoes;
+import com.equivalencia.utilitarios.Utilitario;
 
 public class Programa {
 
@@ -18,7 +18,7 @@ public class Programa {
 		// o 1 é a partida do programa 1
 		int comeco = 1;
 
-		UtilitarioRotuloOperacoes utilitario = new UtilitarioRotuloOperacoes();
+		Utilitario utilitario = new Utilitario();
 
 		utilitario.rotulaOperacoesEmOrdemExecucao(instrucoesMonoliticasPrograma1);
 		utilitario.rotulaOperacoesEmOrdemExecucao(instrucoesMonoliticasPrograma2);
