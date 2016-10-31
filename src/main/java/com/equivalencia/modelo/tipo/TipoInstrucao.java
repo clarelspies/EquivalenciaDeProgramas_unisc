@@ -34,9 +34,10 @@ public enum TipoInstrucao {
 			return "PARADA";
 		}
 
+		// OMEGA
 		@Override
 		public String getRotulo(InstrucaoMonolitica instrucao) {
-			return "&";
+			return "Σ";
 		}
 
 	},
@@ -59,9 +60,10 @@ public enum TipoInstrucao {
 			return "CICLO";
 		}
 
+		// SIGMA
 		@Override
 		public String getRotulo(InstrucaoMonolitica instrucao) {
-			return "OO";
+			return "ω";
 		}
 
 	}

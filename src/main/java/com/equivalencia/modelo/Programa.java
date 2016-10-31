@@ -15,14 +15,9 @@ public class Programa {
 		this.instrucoesMonoliticasPrograma1 = programa1;
 		this.instrucoesMonoliticasPrograma2 = programa2;
 
-		// o 1 é a partida do programa 1
-		int comeco = 1;
-
 		Utilitario utilitario = new Utilitario();
-
 		utilitario.rotulaOperacoesEmOrdemExecucao(instrucoesMonoliticasPrograma1);
 		utilitario.rotulaOperacoesEmOrdemExecucao(instrucoesMonoliticasPrograma2);
-
 	}
 
 	// defini instrucoes rotuladas compostas a partir das intrucoesmonoliticas,

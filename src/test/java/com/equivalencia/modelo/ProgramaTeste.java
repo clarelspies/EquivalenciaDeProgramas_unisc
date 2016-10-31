@@ -35,13 +35,13 @@ public class ProgramaTeste {
 
 			assertEquals("(F,2)(G,4)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(0, programa.getInstrucoesMonoliticasPrograma1()).toString());
 			assertEquals("(G,4)(G,4)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(2, programa.getInstrucoesMonoliticasPrograma1()).toString());
-			assertEquals("(PARADA,&)(PARADA,&)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(4, programa.getInstrucoesMonoliticasPrograma1()).toString());
-			assertEquals("(PARADA,&)(PARADA,&)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(5, programa.getInstrucoesMonoliticasPrograma1()).toString());
+			assertEquals("(PARADA,Σ)(PARADA,Σ)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(4, programa.getInstrucoesMonoliticasPrograma1()).toString());
+			assertEquals("(PARADA,Σ)(PARADA,Σ)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(5, programa.getInstrucoesMonoliticasPrograma1()).toString());
 
 			assertEquals("(F,6)(F,6)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(0, programa.getInstrucoesMonoliticasPrograma2()).toString());
 			assertEquals("(G,7)(F,6)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(2, programa.getInstrucoesMonoliticasPrograma2()).toString());
 			assertEquals("(F,6)(H,8)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(4, programa.getInstrucoesMonoliticasPrograma2()).toString());
-			assertEquals("(PARADA,&)(H,8)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(5, programa.getInstrucoesMonoliticasPrograma2()).toString());
+			assertEquals("(PARADA,Σ)(H,8)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(5, programa.getInstrucoesMonoliticasPrograma2()).toString());
 		} catch (Exception e) {
 			String message = "";
 			assertEquals(message, e.getMessage());
@@ -69,14 +69,14 @@ public class ProgramaTeste {
 			List<InstrucaoMonolitica> instrucoesMonoliticas2 = InstrucaoMonolitica.criaListaInstrucoesMonoliticasParaPrograma(entradas2);
 			Programa programa = new Programa(instrucoesMonoliticas1, instrucoesMonoliticas2);
 
-			assertEquals("(F,2)(PARADA,&)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(0, programa.getInstrucoesMonoliticasPrograma1()).toString());
+			assertEquals("(F,2)(PARADA,Σ)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(0, programa.getInstrucoesMonoliticasPrograma1()).toString());
 			assertEquals("(F,2)(G,3)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(2, programa.getInstrucoesMonoliticasPrograma1()).toString());
-			assertEquals("(F,2)(PARADA,&)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(4, programa.getInstrucoesMonoliticasPrograma1()).toString());
+			assertEquals("(F,2)(PARADA,Σ)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(4, programa.getInstrucoesMonoliticasPrograma1()).toString());
 
-			assertEquals("(F,5)(PARADA,&)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(0, programa.getInstrucoesMonoliticasPrograma2()).toString());
+			assertEquals("(F,5)(PARADA,Σ)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(0, programa.getInstrucoesMonoliticasPrograma2()).toString());
 			assertEquals("(F,6)(G,7)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(2, programa.getInstrucoesMonoliticasPrograma2()).toString());
 			assertEquals("(F,6)(G,7)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(4, programa.getInstrucoesMonoliticasPrograma2()).toString());
-			assertEquals("(F,5)(PARADA,&)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(5, programa.getInstrucoesMonoliticasPrograma2()).toString());
+			assertEquals("(F,5)(PARADA,Σ)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(5, programa.getInstrucoesMonoliticasPrograma2()).toString());
 		} catch (Exception e) {
 			String message = "";
 			assertEquals(message, e.getMessage());
@@ -104,14 +104,14 @@ public class ProgramaTeste {
 			List<InstrucaoMonolitica> instrucoesMonoliticas2 = InstrucaoMonolitica.criaListaInstrucoesMonoliticasParaPrograma(entradas2);
 			Programa programa = new Programa(instrucoesMonoliticas1, instrucoesMonoliticas2);
 
-			assertEquals("(F,2)(PARADA,&)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(0, programa.getInstrucoesMonoliticasPrograma1()).toString());
+			assertEquals("(F,2)(PARADA,Σ)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(0, programa.getInstrucoesMonoliticasPrograma1()).toString());
 			assertEquals("(F,2)(G,3)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(2, programa.getInstrucoesMonoliticasPrograma1()).toString());
-			assertEquals("(F,2)(PARADA,&)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(4, programa.getInstrucoesMonoliticasPrograma1()).toString());
+			assertEquals("(F,2)(PARADA,Σ)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(4, programa.getInstrucoesMonoliticasPrograma1()).toString());
 
-			assertEquals("(F,5)(PARADA,&)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(0, programa.getInstrucoesMonoliticasPrograma2()).toString());
+			assertEquals("(F,5)(PARADA,Σ)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(0, programa.getInstrucoesMonoliticasPrograma2()).toString());
 			assertEquals("(F,6)(G,7)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(2, programa.getInstrucoesMonoliticasPrograma2()).toString());
 			assertEquals("(F,6)(G,7)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(4, programa.getInstrucoesMonoliticasPrograma2()).toString());
-			assertEquals("(F,5)(PARADA,&)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(5, programa.getInstrucoesMonoliticasPrograma2()).toString());
+			assertEquals("(F,5)(PARADA,Σ)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(5, programa.getInstrucoesMonoliticasPrograma2()).toString());
 		} catch (Exception e) {
 			String message = "";
 			assertEquals(message, e.getMessage());
@@ -143,15 +143,15 @@ public class ProgramaTeste {
 			List<InstrucaoMonolitica> instrucoesMonoliticas2 = InstrucaoMonolitica.criaListaInstrucoesMonoliticasParaPrograma(entradas2);
 			Programa programa = new Programa(instrucoesMonoliticas1, instrucoesMonoliticas2);
 
-			assertEquals("(F,2)(CICLO,OO)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(0, programa.getInstrucoesMonoliticasPrograma1()).toString());
+			assertEquals("(F,2)(CICLO,ω)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(0, programa.getInstrucoesMonoliticasPrograma1()).toString());
 			assertEquals("(G,3)(G,3)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(3, programa.getInstrucoesMonoliticasPrograma1()).toString());
-			assertEquals("(F,4)(PARADA,&)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(4, programa.getInstrucoesMonoliticasPrograma1()).toString());
-			assertEquals("(F,2)(CICLO,OO)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(6, programa.getInstrucoesMonoliticasPrograma1()).toString());
+			assertEquals("(F,4)(PARADA,Σ)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(4, programa.getInstrucoesMonoliticasPrograma1()).toString());
+			assertEquals("(F,2)(CICLO,ω)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(6, programa.getInstrucoesMonoliticasPrograma1()).toString());
 
-			assertEquals("(F,6)(CICLO,OO)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(0, programa.getInstrucoesMonoliticasPrograma2()).toString());
+			assertEquals("(F,6)(CICLO,ω)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(0, programa.getInstrucoesMonoliticasPrograma2()).toString());
 			assertEquals("(G,7)(G,7)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(2, programa.getInstrucoesMonoliticasPrograma2()).toString());
-			assertEquals("(F,8)(PARADA,&)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(4, programa.getInstrucoesMonoliticasPrograma2()).toString());
-			assertEquals("(F,6)(CICLO,OO)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(0, programa.getInstrucoesMonoliticasPrograma2()).toString());
+			assertEquals("(F,8)(PARADA,Σ)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(4, programa.getInstrucoesMonoliticasPrograma2()).toString());
+			assertEquals("(F,6)(CICLO,ω)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(0, programa.getInstrucoesMonoliticasPrograma2()).toString());
 		} catch (Exception e) {
 			String message = "";
 			assertEquals(message, e.getMessage());
