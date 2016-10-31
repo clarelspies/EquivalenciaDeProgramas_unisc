@@ -9,8 +9,10 @@ import com.equivalencia.modelo.tipo.TipoInstrucao;
 
 public class Utilitario {
 
-	private int contador = 1;
+	private int contadorRotuloMonolitico = 1;
+	private int contadorRotuloComposto = 1;
 
+	// rotula as operacoes das intrucoes monoliticas, conforme serão executadas em instrucoes compostas
 	public List<InstrucaoMonolitica> rotulaOperacoesEmOrdemExecucao(List<InstrucaoMonolitica> instrucoes) {
 		List<Integer> listaOrdemExecucaoOperacoes = new ArrayList<>();
 
@@ -18,7 +20,7 @@ public class Utilitario {
 		for (InstrucaoMonolitica instrucao : instrucoes) {
 
 			if (instrucao.getTipo() == TipoInstrucao.PARTIDA) {
-				this.contador++;
+				this.contadorRotuloMonolitico++;
 			}
 
 			if (instrucao.getTipo() == TipoInstrucao.TESTE) {
@@ -41,9 +43,9 @@ public class Utilitario {
 			try {
 				InstrucaoMonolitica instrucao = instrucoes.get(indexTesteAtual.intValue());
 				if (instrucao.getTipo() == TipoInstrucao.OPERACAO && instrucao.getRotuloOperacao() == null) {
-					instrucao.setRotuloOperacao(String.valueOf(this.contador));
+					instrucao.setRotuloOperacao(String.valueOf(this.contadorRotuloMonolitico));
 					instrucoes.set(indexTesteAtual, instrucao);
-					this.contador++;
+					this.contadorRotuloMonolitico++;
 				}
 			} catch (Exception e) {
 				// as vezes o destino é uma operacao vazia/ nao existe o rotulo
@@ -53,6 +55,47 @@ public class Utilitario {
 		return instrucoes;
 	}
 
+	// gera todas as intrucoes compostas a partir de uma lista de instrucoes monoliticas
+	public List<InstrucaoRotuladaComposta> geraInstrucoesRotuladasCompostas(List<InstrucaoMonolitica> instrucoesMonoliticas) {
+		List<InstrucaoRotuladaComposta> instrucoesCompostas = new ArrayList<>();
+
+		boolean possuiCiclo = false;
+		int contadorPosicaoAtual = 0;
+
+		for (InstrucaoMonolitica instrucaoMonolitica : instrucoesMonoliticas) {
+			if (instrucaoMonolitica.getTipo() == TipoInstrucao.OPERACAO || instrucaoMonolitica.getTipo() == TipoInstrucao.PARTIDA) {
+				InstrucaoRotuladaComposta instrucaoComposta = Utilitario.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(contadorPosicaoAtual, instrucoesMonoliticas);
+				instrucaoComposta.setRotulo(String.valueOf(this.contadorRotuloComposto));
+				instrucoesCompostas.add(instrucaoComposta);
+
+				this.contadorRotuloComposto++;
+				// teste para saber se houve algum ciclo no programa
+				if (instrucaoComposta.getTipo1() == TipoInstrucao.CICLO || instrucaoComposta.getTipo2() == TipoInstrucao.CICLO) {
+					possuiCiclo = true;
+				}
+			}
+			contadorPosicaoAtual++;
+		}
+
+		// se teve algum ciclo no programa, no final adiciona:
+		if (possuiCiclo) {
+			// auxiliar usado só para gerar SIGMA do CICLO
+			InstrucaoMonolitica instrucaoMonoliticaAuxiliar = new InstrucaoMonolitica();
+			instrucaoMonoliticaAuxiliar.setTipo(TipoInstrucao.CICLO);
+
+			InstrucaoRotuladaComposta instrucaoComposta = new InstrucaoRotuladaComposta();
+			instrucaoComposta.setRotulo(TipoInstrucao.CICLO.getRotulo(instrucaoMonoliticaAuxiliar));
+			// SET PRA PRIMEIRA COLUNA
+			instrucaoComposta.setInstrucaoRotulada(TipoInstrucao.CICLO.getIdentificador(instrucaoMonoliticaAuxiliar), TipoInstrucao.CICLO.getRotulo(instrucaoMonoliticaAuxiliar), TipoInstrucao.CICLO);
+			// SET PRA SEGUNDA COLUNA
+			instrucaoComposta.setInstrucaoRotulada(TipoInstrucao.CICLO.getIdentificador(instrucaoMonoliticaAuxiliar), TipoInstrucao.CICLO.getRotulo(instrucaoMonoliticaAuxiliar), TipoInstrucao.CICLO);
+			instrucoesCompostas.add(instrucaoComposta);
+		}
+
+		return instrucoesCompostas;
+	}
+
+	// defini a partir de uma instrucao monolitica, qual será a instrucao composta correspondente
 	public static InstrucaoRotuladaComposta geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(int posicaoInicial, List<InstrucaoMonolitica> instrucoesMonoliticas) {
 		InstrucaoRotuladaComposta instrucaoComposta = new InstrucaoRotuladaComposta();
 		InstrucaoMonolitica instrucaoInicial = instrucoesMonoliticas.get(posicaoInicial);

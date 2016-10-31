@@ -95,7 +95,35 @@ public class UtilitarioTeste {
 		assertEquals("(F,12)(F,13)", Utilitario.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(5, instrucoesMonoliticas2).toString());
 		assertEquals("(PARADA,Σ)(F,13)", Utilitario.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(7, instrucoesMonoliticas2).toString());
 		assertEquals("(F,13)(F,13)", Utilitario.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(8, instrucoesMonoliticas2).toString());
+	}
 
+	@Test
+	public void teste_geraInstrucoesRotuladasCompostas_1() throws Exception {
+		List<InstrucaoMonolitica> instrucoesMonoliticas1 = InstrucaoMonolitica.criaListaInstrucoesMonoliticasParaPrograma(MOCKInstrucaoMonoliticaEntradaUsuario.teste4_programa1());
+		List<InstrucaoMonolitica> instrucoesMonoliticas2 = InstrucaoMonolitica.criaListaInstrucoesMonoliticasParaPrograma(MOCKInstrucaoMonoliticaEntradaUsuario.teste4_programa2());
+
+		Utilitario utilitario = new Utilitario();
+		utilitario.rotulaOperacoesEmOrdemExecucao(instrucoesMonoliticas1);
+		utilitario.rotulaOperacoesEmOrdemExecucao(instrucoesMonoliticas2);
+
+		List<InstrucaoRotuladaComposta> instrucoesCompostas1 = utilitario.geraInstrucoesRotuladasCompostas(instrucoesMonoliticas1);
+		List<InstrucaoRotuladaComposta> instrucoesCompostas2 = utilitario.geraInstrucoesRotuladasCompostas(instrucoesMonoliticas2);
+
+		assertEquals("1:(G,2)(F,3)", instrucoesCompostas1.get(0).toStringComRotulo());
+		assertEquals("2:(G,2)(F,3)", instrucoesCompostas1.get(1).toStringComRotulo());
+		assertEquals("3:(F,4)(G,5)", instrucoesCompostas1.get(2).toStringComRotulo());
+		assertEquals("4:(F,4)(G,5)", instrucoesCompostas1.get(3).toStringComRotulo());
+		assertEquals("5:(F,6)(CICLO,ω)", instrucoesCompostas1.get(4).toStringComRotulo());
+		assertEquals("6:(PARADA,Σ)(G,7)", instrucoesCompostas1.get(5).toStringComRotulo());
+		assertEquals("7:(G,7)(G,7)", instrucoesCompostas1.get(6).toStringComRotulo());
+		assertEquals("ω:(CICLO,ω)(CICLO,ω)", instrucoesCompostas1.get(7).toStringComRotulo());
+
+		assertEquals("8:(G,9)(F,10)", instrucoesCompostas2.get(0).toStringComRotulo());
+		assertEquals("9:(G,9)(F,10)", instrucoesCompostas2.get(1).toStringComRotulo());
+		assertEquals("10:(F,10)(G,11)", instrucoesCompostas2.get(2).toStringComRotulo());
+		assertEquals("11:(F,12)(F,13)", instrucoesCompostas2.get(3).toStringComRotulo());
+		assertEquals("12:(PARADA,Σ)(F,13)", instrucoesCompostas2.get(4).toStringComRotulo());
+		assertEquals("13:(F,13)(F,13)", instrucoesCompostas2.get(5).toStringComRotulo());
 	}
 
 }

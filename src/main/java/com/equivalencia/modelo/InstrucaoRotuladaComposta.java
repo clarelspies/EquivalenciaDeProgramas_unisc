@@ -3,6 +3,7 @@ package com.equivalencia.modelo;
 import com.equivalencia.modelo.tipo.TipoInstrucao;
 
 public class InstrucaoRotuladaComposta {
+	private String rotulo;
 
 	private TipoInstrucao tipo1;
 	private String identificador1;
@@ -34,53 +35,27 @@ public class InstrucaoRotuladaComposta {
 
 		return primeiroConjunto.toString() + segundoConjunto.toString();
 	}
+	
+	public String toStringComRotulo() {
+		StringBuffer primeiroConjunto = new StringBuffer(this.rotulo+":");
+		primeiroConjunto.append("(" + identificador1 + "," + rotulo1 + ")");
+
+		StringBuffer segundoConjunto = new StringBuffer("");
+		segundoConjunto.append("(" + identificador2 + "," + rotulo2 + ")");
+
+		return primeiroConjunto.toString() + segundoConjunto.toString();
+	}
 
 	public TipoInstrucao getTipo1() {
 		return tipo1;
-	}
-
-	public void setTipo1(TipoInstrucao tipo1) {
-		this.tipo1 = tipo1;
-	}
-
-	public String getIdentificador1() {
-		return identificador1;
-	}
-
-	public void setIdentificador1(String identificador1) {
-		this.identificador1 = identificador1;
-	}
-
-	public String getRotulo1() {
-		return rotulo1;
-	}
-
-	public void setRotulo1(String rotulo1) {
-		this.rotulo1 = rotulo1;
 	}
 
 	public TipoInstrucao getTipo2() {
 		return tipo2;
 	}
 
-	public void setTipo2(TipoInstrucao tipo2) {
-		this.tipo2 = tipo2;
-	}
-
-	public String getIdentificador2() {
-		return identificador2;
-	}
-
-	public void setIdentificador2(String identificador2) {
-		this.identificador2 = identificador2;
-	}
-
-	public String getRotulo2() {
-		return rotulo2;
-	}
-
-	public void setRotulo2(String rotulo2) {
-		this.rotulo2 = rotulo2;
+	public void setRotulo(String rotulo) {
+		this.rotulo = rotulo;
 	}
 
 }
