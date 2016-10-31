@@ -18,9 +18,11 @@ public class Programa {
 		// o 1 é a partida do programa 1
 		int comeco = 1;
 
-		UtilitarioRotuloOperacoes utilitario = UtilitarioRotuloOperacoes.rotulaFuncoesDasInstrucoesMonoliticasPrograma(comeco, instrucoesMonoliticasPrograma1);
-		// o utilitario guarda o numero da proxima funcao, que sera a funcao de partida da segunda lista de instrucoes
-		UtilitarioRotuloOperacoes.rotulaFuncoesDasInstrucoesMonoliticasPrograma(utilitario.getContador(), instrucoesMonoliticasPrograma2);
+		UtilitarioRotuloOperacoes utilitario = new UtilitarioRotuloOperacoes();
+
+		utilitario.rotulaOperacoesEmOrdemExecucao(instrucoesMonoliticasPrograma1);
+		utilitario.rotulaOperacoesEmOrdemExecucao(instrucoesMonoliticasPrograma2);
+
 	}
 
 	// defini instrucoes rotuladas compostas a partir das intrucoesmonoliticas,
@@ -63,16 +65,16 @@ public class Programa {
 			try {
 				instrucaoEmTeste = instrucoesMonoliticas.get(indexInstrucaoEmTeste);
 
-				//primeiro caso de loop, fica executando ele mesmo
-				//segundo caso de loop, fica executando testes encadeados
-				if(indexInstrucaoEmTeste == instrucaoEmTeste.buscaIndexProximaInstrucaoExecutada(true) || executouEmLoop>20){
+				// primeiro caso de loop, fica executando ele mesmo
+				// segundo caso de loop, fica executando testes encadeados
+				if (indexInstrucaoEmTeste == instrucaoEmTeste.buscaIndexProximaInstrucaoExecutada(true) || executouEmLoop > 20) {
 					instrucaoComposta.setTipo1(TipoInstrucao.CICLO);
 					instrucaoComposta.setIdentificador1(TipoInstrucao.CICLO.getIdentificador(instrucaoEmTeste));
 					instrucaoComposta.setRotulo1(TipoInstrucao.CICLO.getRotulo(instrucaoEmTeste));
 					executouEmLoop = 0;
 					break;
 				}
-				
+
 				// se a instrucao q buscar for OPERACAO, ACHOU!
 				if (instrucaoEmTeste.getTipo() == TipoInstrucao.OPERACAO) {
 					instrucaoComposta.setTipo1(TipoInstrucao.OPERACAO);
@@ -92,7 +94,7 @@ public class Programa {
 				executouEmLoop = 0;
 				break;
 			}
-			
+
 			executouEmLoop++;
 		}
 
@@ -104,8 +106,8 @@ public class Programa {
 			InstrucaoMonolitica instrucaoEmTeste = null;
 			try {
 				instrucaoEmTeste = instrucoesMonoliticas.get(indexInstrucaoEmTeste);
-				
-				if(indexInstrucaoEmTeste == instrucaoEmTeste.buscaIndexProximaInstrucaoExecutada(false) || executouEmLoop>20){
+
+				if (indexInstrucaoEmTeste == instrucaoEmTeste.buscaIndexProximaInstrucaoExecutada(false) || executouEmLoop > 20) {
 					instrucaoComposta.setTipo2(TipoInstrucao.CICLO);
 					instrucaoComposta.setIdentificador2(TipoInstrucao.CICLO.getIdentificador(instrucaoEmTeste));
 					instrucaoComposta.setRotulo2(TipoInstrucao.CICLO.getRotulo(instrucaoEmTeste));

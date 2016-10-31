@@ -6,44 +6,43 @@ import java.util.List;
 import com.equivalencia.modelo.InstrucaoMonolitica;
 import com.equivalencia.modelo.tipo.TipoInstrucao;
 
-//classe utilizada para retornar a lista de instrucoes numeradas, e um contador que representa a contagem;
 public class UtilitarioRotuloOperacoes {
 
-	private int contador;
-	private List<InstrucaoMonolitica> instrucoes;
+	private int contador = 1;
 
-	// se for o primeiro programa, começa em 2!
-	public static UtilitarioRotuloOperacoes rotulaFuncoesDasInstrucoesMonoliticasPrograma(int comeco, List<InstrucaoMonolitica> instrucoes) {
-		UtilitarioRotuloOperacoes retorno = new UtilitarioRotuloOperacoes();
+	public List<InstrucaoMonolitica> rotulaOperacoesEmOrdemExecucao(List<InstrucaoMonolitica> instrucoes) {
+		List<Integer> listaOrdemExecucaoOperacoes = new ArrayList<>();
 
-		List<Integer> ordemTesteOperacao = new ArrayList<>();
-		comeco++;
 		int posicaoAtual = 0;
 		for (InstrucaoMonolitica instrucao : instrucoes) {
 
+			if (instrucao.getTipo() == TipoInstrucao.PARTIDA) {
+				this.contador++;
+			}
+
 			if (instrucao.getTipo() == TipoInstrucao.TESTE) {
-				ordemTesteOperacao.add(instrucao.getDestinoTesteVerdadeiro());
+				listaOrdemExecucaoOperacoes.add(instrucao.getDestinoTesteVerdadeiro());
 			}
 
 			if (instrucao.getTipo() == TipoInstrucao.OPERACAO) {
 				if (posicaoAtual == 1) {
-					ordemTesteOperacao.add(1);
+					listaOrdemExecucaoOperacoes.add(1);
 				} else {
-					ordemTesteOperacao.add(instrucao.getDestinoOperacao());
+					listaOrdemExecucaoOperacoes.add(instrucao.getDestinoOperacao());
 				}
 			}
 
 			posicaoAtual++;
 		}
 
-		for (Integer indexTesteAtual : ordemTesteOperacao) {
+		for (Integer indexTesteAtual : listaOrdemExecucaoOperacoes) {
 
 			try {
 				InstrucaoMonolitica instrucao = instrucoes.get(indexTesteAtual.intValue());
 				if (instrucao.getTipo() == TipoInstrucao.OPERACAO && instrucao.getRotuloOperacao() == null) {
-					instrucao.setRotuloOperacao(String.valueOf(comeco));
+					instrucao.setRotuloOperacao(String.valueOf(this.contador));
 					instrucoes.set(indexTesteAtual, instrucao);
-					comeco++;
+					this.contador++;
 				}
 			} catch (Exception e) {
 				// as vezes o destino é uma operacao vazia/ nao existe o rotulo
@@ -54,33 +53,14 @@ public class UtilitarioRotuloOperacoes {
 		int indexTesteAtual = 0;
 		for (InstrucaoMonolitica instrucao : instrucoes) {
 			if (instrucao.getTipo() == TipoInstrucao.OPERACAO && instrucao.getRotuloOperacao() == null) {
-				instrucao.setRotuloOperacao(String.valueOf(comeco));
+				instrucao.setRotuloOperacao(String.valueOf(this.contador));
 				instrucoes.set(indexTesteAtual, instrucao);
-				comeco++;
+				this.contador++;
 			}
 			indexTesteAtual++;
 		}
 
-		retorno.setContador(comeco);
-		retorno.setInstrucoes(instrucoes);
-
-		return retorno;
-	}
-
-	public int getContador() {
-		return contador;
-	}
-
-	public void setContador(int contador) {
-		this.contador = contador;
-	}
-
-	public List<InstrucaoMonolitica> getInstrucoes() {
 		return instrucoes;
-	}
-
-	public void setInstrucoes(List<InstrucaoMonolitica> instrucoes) {
-		this.instrucoes = instrucoes;
 	}
 
 }
