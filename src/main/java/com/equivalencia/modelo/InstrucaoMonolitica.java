@@ -11,7 +11,7 @@ public class InstrucaoMonolitica {
 	private TipoInstrucao tipo;
 	private String identificador;
 
-	// conta qual o numero da operação!
+	// conta qual o numero da operação no fluxograma!
 	private String rotuloOperacao;
 
 	private int destinoOperacao;
@@ -110,7 +110,6 @@ public class InstrucaoMonolitica {
 	}
 
 	public int buscaIndexProximaInstrucaoExecutada(boolean primeiroConjunto) {
-
 		// SE FOR OPERACAO, NAO IMPORTA SE É PRIMEIRO OU SEGUNDO CONJUNTO.. O RESULTADO É IGUAL.
 		if (this.getTipo() == TipoInstrucao.OPERACAO || this.getTipo() == TipoInstrucao.PARTIDA) {
 			return this.getDestinoOperacao();

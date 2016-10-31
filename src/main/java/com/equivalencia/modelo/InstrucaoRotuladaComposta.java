@@ -2,7 +2,6 @@ package com.equivalencia.modelo;
 
 import com.equivalencia.modelo.tipo.TipoInstrucao;
 
-//O RÓTULO  além de assumir valores numéricos, pode assumir simbolo infinito para ciclo ou E em paradas.
 public class InstrucaoRotuladaComposta {
 
 	private TipoInstrucao tipo1;
@@ -12,6 +11,18 @@ public class InstrucaoRotuladaComposta {
 	private TipoInstrucao tipo2;
 	private String identificador2;
 	private String rotulo2;
+
+	public void setInstrucaoRotulada(String identificador, String rotulo, TipoInstrucao tipo) {
+		if (this.tipo1 == null) {
+			this.tipo1 = tipo;
+			this.identificador1 = identificador;
+			this.rotulo1 = rotulo;
+		} else {
+			this.tipo2 = tipo;
+			this.identificador2 = identificador;
+			this.rotulo2 = rotulo;
+		}
+	}
 
 	@Override
 	public String toString() {
