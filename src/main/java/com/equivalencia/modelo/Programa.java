@@ -55,6 +55,7 @@ public class Programa {
 
 		InstrucaoMonolitica instrucaoInicial = instrucoesMonoliticas.get(posicaoInicial);
 		int indexInstrucaoEmTeste = instrucaoInicial.buscaIndexProximaInstrucaoExecutada(true);
+		int executouEmLoop = 0;
 
 		while (true) {
 			// cada percorrida, busca proxima!
@@ -62,16 +63,22 @@ public class Programa {
 			try {
 				instrucaoEmTeste = instrucoesMonoliticas.get(indexInstrucaoEmTeste);
 
-				if (instrucaoEmTeste.getTipo() == TipoInstrucao.PARTIDA) {
-					indexInstrucaoEmTeste = 1;
-					continue;
+				//primeiro caso de loop, fica executando ele mesmo
+				//segundo caso de loop, fica executando testes encadeados
+				if(indexInstrucaoEmTeste == instrucaoEmTeste.buscaIndexProximaInstrucaoExecutada(true) || executouEmLoop>20){
+					instrucaoComposta.setTipo1(TipoInstrucao.CICLO);
+					instrucaoComposta.setIdentificador1(TipoInstrucao.CICLO.getIdentificador(instrucaoEmTeste));
+					instrucaoComposta.setRotulo1(TipoInstrucao.CICLO.getRotulo(instrucaoEmTeste));
+					executouEmLoop = 0;
+					break;
 				}
-
+				
 				// se a instrucao q buscar for OPERACAO, ACHOU!
 				if (instrucaoEmTeste.getTipo() == TipoInstrucao.OPERACAO) {
 					instrucaoComposta.setTipo1(TipoInstrucao.OPERACAO);
 					instrucaoComposta.setIdentificador1(TipoInstrucao.OPERACAO.getIdentificador(instrucaoEmTeste));
 					instrucaoComposta.setRotulo1(TipoInstrucao.OPERACAO.getRotulo(instrucaoEmTeste));
+					executouEmLoop = 0;
 					break;
 				}
 
@@ -82,21 +89,28 @@ public class Programa {
 				instrucaoComposta.setTipo1(TipoInstrucao.PARADA);
 				instrucaoComposta.setIdentificador1(TipoInstrucao.PARADA.getIdentificador(instrucaoEmTeste));
 				instrucaoComposta.setRotulo1(TipoInstrucao.PARADA.getRotulo(instrucaoEmTeste));
+				executouEmLoop = 0;
 				break;
 			}
+			
+			executouEmLoop++;
 		}
 
 		indexInstrucaoEmTeste = instrucaoInicial.buscaIndexProximaInstrucaoExecutada(false);
+		executouEmLoop = 0;
 
 		while (true) {
 			// cada percorrida, busca proxima!
 			InstrucaoMonolitica instrucaoEmTeste = null;
 			try {
 				instrucaoEmTeste = instrucoesMonoliticas.get(indexInstrucaoEmTeste);
-
-				if (instrucaoEmTeste.getTipo() == TipoInstrucao.PARTIDA) {
-					indexInstrucaoEmTeste = 1;
-					continue;
+				
+				if(indexInstrucaoEmTeste == instrucaoEmTeste.buscaIndexProximaInstrucaoExecutada(false) || executouEmLoop>20){
+					instrucaoComposta.setTipo2(TipoInstrucao.CICLO);
+					instrucaoComposta.setIdentificador2(TipoInstrucao.CICLO.getIdentificador(instrucaoEmTeste));
+					instrucaoComposta.setRotulo2(TipoInstrucao.CICLO.getRotulo(instrucaoEmTeste));
+					executouEmLoop = 0;
+					break;
 				}
 
 				// se a instrucao q buscar for OPERACAO, ACHOU!
@@ -104,6 +118,7 @@ public class Programa {
 					instrucaoComposta.setTipo2(TipoInstrucao.OPERACAO);
 					instrucaoComposta.setIdentificador2(TipoInstrucao.OPERACAO.getIdentificador(instrucaoEmTeste));
 					instrucaoComposta.setRotulo2(TipoInstrucao.OPERACAO.getRotulo(instrucaoEmTeste));
+					executouEmLoop = 0;
 					break;
 				}
 
@@ -114,8 +129,10 @@ public class Programa {
 				instrucaoComposta.setTipo2(TipoInstrucao.PARADA);
 				instrucaoComposta.setIdentificador2(TipoInstrucao.PARADA.getIdentificador(instrucaoEmTeste));
 				instrucaoComposta.setRotulo2(TipoInstrucao.PARADA.getRotulo(instrucaoEmTeste));
+				executouEmLoop = 0;
 				break;
 			}
+			executouEmLoop++;
 		}
 
 		return instrucaoComposta;
