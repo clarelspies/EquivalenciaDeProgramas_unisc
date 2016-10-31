@@ -12,7 +12,7 @@ public class UtilitarioRotuloOperacoes {
 	private int contador;
 	private List<InstrucaoMonolitica> instrucoes;
 
-	//se for o primeiro programa, começa em 2!
+	// se for o primeiro programa, começa em 2!
 	public static UtilitarioRotuloOperacoes rotulaFuncoesDasInstrucoesMonoliticasPrograma(int comeco, List<InstrucaoMonolitica> instrucoes) {
 		UtilitarioRotuloOperacoes retorno = new UtilitarioRotuloOperacoes();
 
@@ -20,16 +20,17 @@ public class UtilitarioRotuloOperacoes {
 		comeco++;
 		int posicaoAtual = 0;
 		for (InstrucaoMonolitica instrucao : instrucoes) {
-			
+
 			if (instrucao.getTipo() == TipoInstrucao.TESTE) {
 				ordemTesteOperacao.add(instrucao.getDestinoTesteVerdadeiro());
-				
 			}
-			
-			// problema de começar com OPERACAO ao inves de TESTE
-			if (posicaoAtual == 1 && instrucao.getTipo() == TipoInstrucao.OPERACAO) {
-				ordemTesteOperacao.add(1);
-			
+
+			if (instrucao.getTipo() == TipoInstrucao.OPERACAO) {
+				if (posicaoAtual == 1) {
+					ordemTesteOperacao.add(1);
+				} else {
+					ordemTesteOperacao.add(instrucao.getDestinoOperacao());
+				}
 			}
 
 			posicaoAtual++;

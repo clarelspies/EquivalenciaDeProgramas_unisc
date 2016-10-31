@@ -153,9 +153,9 @@ public class ProgramaTeste {
 			Programa programa = new Programa(instrucoesMonoliticas1, instrucoesMonoliticas2);
 
 			assertEquals("(F,2)(CICLO,OO)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(0, programa.getInstrucoesMonoliticasPrograma1()).toString());
-			// assertEquals("(G,2)(G,3)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(3, programa.getInstrucoesMonoliticasPrograma1()).toString());
-			// assertEquals("(F,4)(PARADA,&)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(4, programa.getInstrucoesMonoliticasPrograma1()).toString());
-			// assertEquals("(F,2)(CICLO,OO)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(6, programa.getInstrucoesMonoliticasPrograma1()).toString());
+			assertEquals("(G,3)(G,3)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(3, programa.getInstrucoesMonoliticasPrograma1()).toString());
+			assertEquals("(F,4)(PARADA,&)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(4, programa.getInstrucoesMonoliticasPrograma1()).toString());
+			assertEquals("(F,2)(CICLO,OO)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(6, programa.getInstrucoesMonoliticasPrograma1()).toString());
 
 			// assertEquals("(F,5)(PARADA,&)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(0, programa.getInstrucoesMonoliticasPrograma2()).toString());
 			// assertEquals("(F,6)(G,7)", Programa.geraInstrucaoRotuladaCompostaAtravesOperacaoOuPartida(2, programa.getInstrucoesMonoliticasPrograma2()).toString());
