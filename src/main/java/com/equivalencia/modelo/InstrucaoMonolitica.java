@@ -68,45 +68,50 @@ public class InstrucaoMonolitica {
 		List<InstrucaoMonolitica> instrucoes = new ArrayList<>();
 		instrucoes.add(new InstrucaoMonolitica());
 		for (String entrada : entradas) {
-			InstrucaoMonolitica instrucao = InstrucaoMonolitica.criaObjetoInstrucaoAtravesEntradaUsuario(entrada);
+			InstrucaoMonolitica instrucao = new InstrucaoMonolitica(entrada);
 			instrucoes.add(instrucao);
 		}
 		return instrucoes;
 	}
 
-	public static InstrucaoMonolitica criaObjetoInstrucaoAtravesEntradaUsuario(String entrada) throws Exception {
-		String entradaOriginal = entrada;
-		InstrucaoMonolitica instrucao = new InstrucaoMonolitica();
-		try {
-			entrada = entrada.replaceAll("  ", " ").toUpperCase().trim();
-			String partes[] = entrada.split(" ");
+	public InstrucaoMonolitica(String entrada) throws Exception {
+		boolean instrucaoValida = false;
 
-			instrucao.setIdentificador(partes[1]);
+		entrada = entrada.replaceAll("  ", " ").toUpperCase().trim();
+		String partes[] = entrada.split(" ");
 
-			// para saber se e teste, instrucao deve comecar com SE e o rotulo deve começar com T: T1, TT1, TT2, T2
-			if (partes[0].equals("SE") && partes[1].charAt(0) == 'T') {
-				instrucao.setTipo(TipoInstrucao.TESTE);
-				instrucao.setDestinoTesteVerdadeiro(new Integer(partes[3]));
-				instrucao.setDestinoTesteFalso(new Integer(partes[5]));
-				if (entrada.contains("VA-PARA") && entrada.contains("SENAO-VA-PARA")) {
-					return instrucao;
-				}
-			} else
-			// para saber se e operacao, intrucao deve comecar com FACA e o rodulo nao deve comecar com T: E1, F1, F, G, ET
-			if (partes[0].equals("FACA") && partes[1].charAt(0) != 'T') {
-				instrucao.setTipo(TipoInstrucao.OPERACAO);
-				instrucao.setDestinoOperacao(new Integer(partes[3]));
-				if (entrada.contains("VA-PARA") && !entrada.contains("SENAO-VA-PARA")) {
-					return instrucao;
-				}
+		this.identificador = partes[1];
+
+		// para saber se e teste, instrucao deve comecar com SE e o rotulo deve começar com T: T1, TT1, TT2, T2
+		if (partes[0].equals("SE") && partes[1].charAt(0) == 'T') {
+			this.tipo = TipoInstrucao.TESTE;
+			this.destinoTesteVerdadeiro = new Integer(partes[3]);
+			this.destinoTesteFalso = new Integer(partes[5]);
+
+			if (!entrada.contains("VA-PARA") || !entrada.contains("SENAO-VA-PARA")) {
+				instrucaoValida = false;
+			} else {
+				instrucaoValida = true;
 			}
-			// se chegar aqui, nao reconheceu instrucao do usuário
-			throw new Exception();
-		} catch (Exception e) {
-			// erro generico, qualquer erro ocorrodio da esta mensagem/exception
-			throw new Exception("Instrução em formato incompatível, por favor verificar entrada: [" + entradaOriginal + "]");
+
+		}
+		// para saber se e operacao, intrucao deve comecar com FACA e o rodulo nao deve comecar com T: E1, F1, F, G, ET
+		if (partes[0].equals("FACA") && partes[1].charAt(0) != 'T') {
+			this.tipo = TipoInstrucao.OPERACAO;
+			this.destinoOperacao = new Integer(partes[3]);
+			instrucaoValida = true;
+			
+			if (!entrada.contains("VA-PARA") || entrada.contains("SENAO-VA-PARA")) {
+				instrucaoValida = false;
+			} else {
+				instrucaoValida = true;
+			}
 		}
 
+		// teste se a instrucao do usuario era valida
+		if (!instrucaoValida) {
+			throw new Exception();
+		}
 	}
 
 	public int buscaIndexProximaInstrucaoExecutada(boolean primeiroConjunto) {
