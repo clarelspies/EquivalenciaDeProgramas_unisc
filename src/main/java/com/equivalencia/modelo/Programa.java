@@ -24,11 +24,15 @@ public class Programa {
 		utilitario.rotulaOperacoesEmOrdemExecucao(this.instrucoesMonoliticasPrograma1);
 		utilitario.rotulaOperacoesEmOrdemExecucao(this.instrucoesMonoliticasPrograma2);
 
-		//
+		// 1 passo, definição das intruções rotuladas compostas
 		this.instrucoesCompostas1 = utilitario.geraInstrucoesRotuladasCompostas(this.instrucoesMonoliticasPrograma1);
 		this.instrucoesCompostas2 = utilitario.geraInstrucoesRotuladasCompostas(this.instrucoesMonoliticasPrograma2);
+		
+		
 
-		// TODO adicionar ciclos no final, com W.. quando tem ciclo
+		// 2 passo, definição da cadeia de conjuntos
+		
+		// 3 passo, simplificação (nem sempre é necessário)
 	}
 
 	public List<InstrucaoMonolitica> getInstrucoesMonoliticasPrograma1() {

@@ -3,6 +3,7 @@ package com.equivalencia.utilitarios;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.equivalencia.modelo.CadeiaConjuntoFinito;
 import com.equivalencia.modelo.InstrucaoMonolitica;
 import com.equivalencia.modelo.InstrucaoRotuladaComposta;
 import com.equivalencia.modelo.tipo.TipoInstrucao;
@@ -17,6 +18,7 @@ public class Utilitario {
 		List<Integer> listaOrdemExecucaoOperacoes = new ArrayList<>();
 
 		int posicaoAtual = 0;
+		// adiciona em uma lista, a ordem com que os rotulos sao executadas!
 		for (InstrucaoMonolitica instrucao : instrucoes) {
 
 			if (instrucao.getTipo() == TipoInstrucao.PARTIDA) {
@@ -29,9 +31,11 @@ public class Utilitario {
 			}
 
 			if (instrucao.getTipo() == TipoInstrucao.OPERACAO) {
+				// caso de quando a primeira instrucao e uma operacao, ele nao executa a proxima! ele executa ele mesmo!
 				if (posicaoAtual == 1) {
 					listaOrdemExecucaoOperacoes.add(1);
 				} else {
+					// executa o destino
 					listaOrdemExecucaoOperacoes.add(instrucao.getDestinoOperacao());
 				}
 			}
@@ -39,6 +43,7 @@ public class Utilitario {
 			posicaoAtual++;
 		}
 
+		// percorre a lista de ordem, identificando operacoes e numerando elas (rotulo) conforme sao executadas
 		for (Integer indexTesteAtual : listaOrdemExecucaoOperacoes) {
 			try {
 				InstrucaoMonolitica instrucao = instrucoes.get(indexTesteAtual.intValue());
@@ -48,7 +53,7 @@ public class Utilitario {
 					this.contadorRotuloMonolitico++;
 				}
 			} catch (Exception e) {
-				// as vezes o destino é uma operacao vazia/ nao existe o rotulo
+				// as vezes o destino e uma operacao vazia/ nao existe o rotulo, nao faz nada neste caso
 			}
 		}
 
@@ -148,6 +153,71 @@ public class Utilitario {
 		}
 
 		return instrucaoComposta;
+	}
+
+	// na lista de instrucoes compostas!
+	// 1 - ENCONTRAR ROTULO QUE CONTEM A ULTIMA PARADA!
+
+	public static List<CadeiaConjuntoFinito> defineCadeiaConjuntoFinito(List<InstrucaoRotuladaComposta> instrucoesCompostas) {
+		// usado para nao alterar a primeira lista/original, java trabalha com ponteiros
+		List<InstrucaoRotuladaComposta> listaInstrucoesAuxiliares = new ArrayList<>(instrucoesCompostas);
+
+		List<CadeiaConjuntoFinito> cadeias = new ArrayList<>();
+		cadeias.add(new CadeiaConjuntoFinito());
+
+		int indexTeste = 0;
+		// procura ultima parada, começa testando por ela
+		int contador = 0;
+		for (InstrucaoRotuladaComposta instrucao : listaInstrucoesAuxiliares) {
+			if (instrucao != null) {
+				if (instrucao.getTipo1() == TipoInstrucao.PARADA || instrucao.getTipo2() == TipoInstrucao.PARADA) {
+					indexTeste = contador;
+				}
+			}
+			contador++;
+		}
+
+		boolean continuaAdicionando = true;
+
+		InstrucaoRotuladaComposta instrucaoEmTeste = null;
+		int indexLimitePrograma = indexTeste;
+		// procura todos iguais ao rotulo q estou testando....
+		while (continuaAdicionando) {
+			instrucaoEmTeste = listaInstrucoesAuxiliares.get(indexTeste);
+			StringBuilder conjunto = new StringBuilder(instrucaoEmTeste.getRotulo());
+			listaInstrucoesAuxiliares.set(indexTeste, null);
+
+			contador = 0;
+			for (InstrucaoRotuladaComposta instrucao : listaInstrucoesAuxiliares) {
+				if (instrucao != null && instrucaoEmTeste.toString().equals(instrucao.toString())) {
+					// remove da lista de instrucoes compostas pois ja foi identificada para adicionar no conjunto finito
+					listaInstrucoesAuxiliares.set(contador, null);
+					// adiciona a lista do proximo conjunto finito
+					conjunto.append("," + instrucao.getRotulo());
+				}
+				contador++;
+			}
+			// monta o proximo conjunto finito e adiciona a lista
+			cadeias.add((new CadeiaConjuntoFinito(cadeias.size() - 1, cadeias.get(cadeias.size() - 1).getConjunto(), conjunto.toString())));
+
+			// percorre a lista para saber se sobrou alguma instrucao para adicionar! ps: menor que o index inicial/da ultima parada
+			contador = 0;
+			//set false caso nao ache novo conjunto para adicionar
+			continuaAdicionando = false;
+			for (InstrucaoRotuladaComposta instrucao : listaInstrucoesAuxiliares) {
+				if (instrucao != null && contador < indexLimitePrograma) {
+					// achou novo index pra testar!
+					indexTeste = contador;
+					continuaAdicionando = true;
+				}
+				contador++;
+			}
+
+		}
+
+		// por formalismo, o ultimo conjunto se repete com novo rotulo!
+		cadeias.add((new CadeiaConjuntoFinito(cadeias.size() - 1, cadeias.get(cadeias.size() - 1).getConjunto(), null)));
+		return cadeias;
 	}
 
 }

@@ -35,9 +35,9 @@ public class InstrucaoRotuladaComposta {
 
 		return primeiroConjunto.toString() + segundoConjunto.toString();
 	}
-	
+
 	public String toStringComRotulo() {
-		StringBuffer primeiroConjunto = new StringBuffer(this.rotulo+":");
+		StringBuffer primeiroConjunto = new StringBuffer(this.rotulo + ":");
 		primeiroConjunto.append("(" + identificador1 + "," + rotulo1 + ")");
 
 		StringBuffer segundoConjunto = new StringBuffer("");
@@ -56,6 +56,10 @@ public class InstrucaoRotuladaComposta {
 
 	public void setRotulo(String rotulo) {
 		this.rotulo = rotulo;
+	}
+
+	public String getRotulo() {
+		return rotulo;
 	}
 
 }
