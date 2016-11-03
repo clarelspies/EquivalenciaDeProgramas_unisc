@@ -3,8 +3,6 @@ package com.equivalencia.modelo;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.equivalencia.modelo.tipo.TipoInstrucao;
-
 //modelo para sepresentar uma instrucao em formato monolitico
 public class InstrucaoMonolitica {
 

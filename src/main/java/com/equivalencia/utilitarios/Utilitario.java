@@ -6,7 +6,7 @@ import java.util.List;
 import com.equivalencia.modelo.CadeiaConjuntoFinito;
 import com.equivalencia.modelo.InstrucaoMonolitica;
 import com.equivalencia.modelo.InstrucaoRotuladaComposta;
-import com.equivalencia.modelo.tipo.TipoInstrucao;
+import com.equivalencia.modelo.TipoInstrucao;
 
 public class Utilitario {
 
@@ -63,8 +63,6 @@ public class Utilitario {
 	// gera todas as intrucoes compostas a partir de uma lista de instrucoes monoliticas
 	public List<InstrucaoRotuladaComposta> geraInstrucoesRotuladasCompostas(List<InstrucaoMonolitica> instrucoesMonoliticas) {
 		List<InstrucaoRotuladaComposta> instrucoesCompostas = new ArrayList<>();
-
-		boolean possuiCiclo = false;
 		int contadorPosicaoAtual = 0;
 
 		for (InstrucaoMonolitica instrucaoMonolitica : instrucoesMonoliticas) {
@@ -74,28 +72,12 @@ public class Utilitario {
 				instrucoesCompostas.add(instrucaoComposta);
 
 				this.contadorRotuloComposto++;
-				// teste para saber se houve algum ciclo no programa
-				if (instrucaoComposta.getTipo1() == TipoInstrucao.CICLO || instrucaoComposta.getTipo2() == TipoInstrucao.CICLO) {
-					possuiCiclo = true;
-				}
 			}
 			contadorPosicaoAtual++;
 		}
 
 		// se teve algum ciclo no programa, no final adiciona:
-		if (possuiCiclo) {
-			// auxiliar usado só para gerar SIGMA do CICLO
-			InstrucaoMonolitica instrucaoMonoliticaAuxiliar = new InstrucaoMonolitica();
-			instrucaoMonoliticaAuxiliar.setTipo(TipoInstrucao.CICLO);
-
-			InstrucaoRotuladaComposta instrucaoComposta = new InstrucaoRotuladaComposta();
-			instrucaoComposta.setRotulo(TipoInstrucao.CICLO.getRotulo(instrucaoMonoliticaAuxiliar));
-			// SET PRA PRIMEIRA COLUNA
-			instrucaoComposta.setInstrucaoRotulada(TipoInstrucao.CICLO.getIdentificador(instrucaoMonoliticaAuxiliar), TipoInstrucao.CICLO.getRotulo(instrucaoMonoliticaAuxiliar), TipoInstrucao.CICLO);
-			// SET PRA SEGUNDA COLUNA
-			instrucaoComposta.setInstrucaoRotulada(TipoInstrucao.CICLO.getIdentificador(instrucaoMonoliticaAuxiliar), TipoInstrucao.CICLO.getRotulo(instrucaoMonoliticaAuxiliar), TipoInstrucao.CICLO);
-			instrucoesCompostas.add(instrucaoComposta);
-		}
+		instrucoesCompostas = adicionaCiclosAoFinalSeNecessario(instrucoesCompostas);
 
 		return instrucoesCompostas;
 	}
@@ -181,13 +163,14 @@ public class Utilitario {
 
 		InstrucaoRotuladaComposta instrucaoEmTeste = null;
 		int indexLimitePrograma = indexTeste;
-		// procura todos iguais ao rotulo q estou testando....
+		// procura todos iguais ao rotulo q estou testando....mesmo após parada!
 		while (continuaAdicionando) {
 			instrucaoEmTeste = listaInstrucoesAuxiliares.get(indexTeste);
 			StringBuilder conjunto = new StringBuilder(instrucaoEmTeste.getRotulo());
 			listaInstrucoesAuxiliares.set(indexTeste, null);
 
 			contador = 0;
+			// verifica se tem rotulo igual ao rotulo em teste, para adicionar ao conjunto em andamento!
 			for (InstrucaoRotuladaComposta instrucao : listaInstrucoesAuxiliares) {
 				if (instrucao != null && instrucaoEmTeste.toString().equals(instrucao.toString())) {
 					// remove da lista de instrucoes compostas pois ja foi identificada para adicionar no conjunto finito
@@ -200,9 +183,9 @@ public class Utilitario {
 			// monta o proximo conjunto finito e adiciona a lista
 			cadeias.add((new CadeiaConjuntoFinito(cadeias.size() - 1, cadeias.get(cadeias.size() - 1).getConjunto(), conjunto.toString())));
 
-			// percorre a lista para saber se sobrou alguma instrucao para adicionar! ps: menor que o index inicial/da ultima parada
+			// percorre a lista para saber se sobrou alguma instrucao para adicionar! ps: que nao tenha ultrapassado limite do programa!
 			contador = 0;
-			//set false caso nao ache novo conjunto para adicionar
+			// set false caso nao ache novo conjunto para adicionar
 			continuaAdicionando = false;
 			for (InstrucaoRotuladaComposta instrucao : listaInstrucoesAuxiliares) {
 				if (instrucao != null && contador < indexLimitePrograma) {
@@ -218,6 +201,138 @@ public class Utilitario {
 		// por formalismo, o ultimo conjunto se repete com novo rotulo!
 		cadeias.add((new CadeiaConjuntoFinito(cadeias.size() - 1, cadeias.get(cadeias.size() - 1).getConjunto(), null)));
 		return cadeias;
+	}
+
+	// verifica se ha algum rótulo além do limite do programa!
+	// recebe a lista de instrucoes compostas, e a cadeia de conjunto finito FINAL gerada!
+	// vai verificar se algum rótulo diferente de "ω" não foi incluído na cadeia de conjuntos finitos!
+	public static List<InstrucaoRotuladaComposta> verificaQuaisInstrucoesCompostasFicaramForaLimitePrograma(List<InstrucaoRotuladaComposta> instrucoesRotuladasCompostas, CadeiaConjuntoFinito cadeiaConjuntoFinito) {
+		List<InstrucaoRotuladaComposta> instrucoesCompostasForaLimitePrograma = new ArrayList<>();
+
+		for (InstrucaoRotuladaComposta instrucao : instrucoesRotuladasCompostas) {
+			if (instrucao != null && instrucao.getRotulo() != "ω" && !cadeiaConjuntoFinito.toString().contains(instrucao.getRotulo())) {
+				instrucoesCompostasForaLimitePrograma.add(instrucao);
+			}
+		}
+
+		return instrucoesCompostasForaLimitePrograma;
+	}
+
+	// eliminar os rotulos fora do limite do programa, e substituir as referencias a este rotulo!
+	public static List<InstrucaoRotuladaComposta> executaSimplificacao(List<InstrucaoRotuladaComposta> instrucoesRotuladasCompostas, List<InstrucaoRotuladaComposta> instrucoeRotuladasCompostasForaLimitePrograma) {
+		List<InstrucaoRotuladaComposta> instrucoeRotuladasCompostasSimplificadas = new ArrayList<>();
+
+		// adiciona na lista nova todas que nao estao na lista de instrucoes fora do limite!
+		for (InstrucaoRotuladaComposta instrucao : instrucoesRotuladasCompostas) {
+
+			boolean foraLimite = false;
+			// se a instrucao em teste nao está na lista de instrucoes fora do limite, adiciona ela!
+			for (InstrucaoRotuladaComposta intrucaoForaLimite : instrucoeRotuladasCompostasForaLimitePrograma) {
+
+				// se cair dentro, é porque a instrucao em teste esta fora do limite e nao pode ser adicionada!
+				if (instrucao.getRotulo().equals(intrucaoForaLimite.getRotulo())) {
+					foraLimite = true;
+					break;
+				}
+			}
+
+			// adiciona
+			if (foraLimite == false) {
+				// preciso dar um new, ao inves de passar a referencia.
+				// java trabalha com ponteiros, a lista de simplificadas alteraria a lista original!
+				instrucoeRotuladasCompostasSimplificadas.add(new InstrucaoRotuladaComposta(instrucao));
+			}
+
+		}
+
+		int contador = 0;
+		// para cada instrucao, usa metodo que verifica se precisa trocar referencia ou nao e executa
+		for (InstrucaoRotuladaComposta instrucao : instrucoeRotuladasCompostasSimplificadas) {
+			InstrucaoRotuladaComposta instrucaoTeste = new InstrucaoRotuladaComposta();
+			instrucaoTeste = instrucao;
+
+			InstrucaoRotuladaComposta instrucaoAposVerificacaoReferencia = executaTrocaReferenciaSeNecessario(instrucaoTeste, instrucoeRotuladasCompostasForaLimitePrograma);
+			instrucoeRotuladasCompostasSimplificadas.set(contador, instrucaoAposVerificacaoReferencia);
+			contador++;
+		}
+		// caso seja necessario adicionar ciclos no final, necessidade pode aparecer apos simplificaçao!
+		instrucoeRotuladasCompostasSimplificadas = adicionaCiclosAoFinalSeNecessario(instrucoeRotuladasCompostasSimplificadas);
+		return instrucoeRotuladasCompostasSimplificadas;
+	}
+
+	// TODO REFATORAR, ESTÁ MUITO FEIO ESTE MÉTODO!
+	// procura as referencias ao conjunto 1 ou 2 de cada uma das intrucoes fora do limite, e substitui por ciclo!
+	public static InstrucaoRotuladaComposta executaTrocaReferenciaSeNecessario(InstrucaoRotuladaComposta instrucaoEmTeste, List<InstrucaoRotuladaComposta> instrucoeRotuladasCompostasForaLimitePrograma) {
+
+		for (InstrucaoRotuladaComposta instrucaoForaLimite : instrucoeRotuladasCompostasForaLimitePrograma) {
+			// testa primeira coluna da instrucao em teste com primeira coluna da instrucao fora limite
+			if (instrucaoEmTeste.getIdentificador1().equals(instrucaoForaLimite.getIdentificador1()) && instrucaoEmTeste.getRotulo1().equals(instrucaoForaLimite.getRotulo1())) {
+				instrucaoEmTeste.setIdentificador1(TipoInstrucao.CICLO.getIdentificador(null));
+				instrucaoEmTeste.setRotulo1(TipoInstrucao.CICLO.getRotulo(null));
+				instrucaoEmTeste.setTipo1(TipoInstrucao.CICLO);
+			}
+			// testa primeira coluna da instrucao em teste com segunda coluna da instrucao fora limite
+			if (instrucaoEmTeste.getIdentificador1().equals(instrucaoForaLimite.getIdentificador2()) && instrucaoEmTeste.getRotulo1().equals(instrucaoForaLimite.getRotulo2())) {
+				instrucaoEmTeste.setIdentificador1(TipoInstrucao.CICLO.getIdentificador(null));
+				instrucaoEmTeste.setRotulo1(TipoInstrucao.CICLO.getRotulo(null));
+				instrucaoEmTeste.setTipo1(TipoInstrucao.CICLO);
+			}
+
+			// testa segunda coluna da instrucao em teste com primeira coluna da instrucao fora limite
+			if (instrucaoEmTeste.getIdentificador2().equals(instrucaoForaLimite.getIdentificador1()) && instrucaoEmTeste.getRotulo2().equals(instrucaoForaLimite.getRotulo1())) {
+				instrucaoEmTeste.setIdentificador2(TipoInstrucao.CICLO.getIdentificador(null));
+				instrucaoEmTeste.setRotulo2(TipoInstrucao.CICLO.getRotulo(null));
+				instrucaoEmTeste.setTipo2(TipoInstrucao.CICLO);
+			}
+			// testa segunda coluna da instrucao em teste com segunda coluna da instrucao fora limite
+			if (instrucaoEmTeste.getIdentificador2().equals(instrucaoForaLimite.getIdentificador2()) && instrucaoEmTeste.getRotulo2().equals(instrucaoForaLimite.getRotulo2())) {
+				instrucaoEmTeste.setIdentificador2(TipoInstrucao.CICLO.getIdentificador(null));
+				instrucaoEmTeste.setRotulo2(TipoInstrucao.CICLO.getRotulo(null));
+				instrucaoEmTeste.setTipo2(TipoInstrucao.CICLO);
+			}
+
+		}
+
+		return instrucaoEmTeste;
+	}
+
+	// adiciona sigma + ciclos no final da lista de instrucoes rotuladas composta, usada no passo 1 e no passo 3!
+	public static List<InstrucaoRotuladaComposta> adicionaCiclosAoFinalSeNecessario(List<InstrucaoRotuladaComposta> instrucoes) {
+
+		// variavel que vai me dar o resultado se achou algum ciclo no programa
+		boolean possuiAlgumCiclo = false;
+		// variavel que vai me dar o resultado se ainda precisa adicionar o ciclo ocm rotulo sigma ao final (se ja tem, nao precisa)
+		boolean precisaAdicionaCicloAoFinal = false;
+		// ambas precisam ser true para adicionar!
+
+		for (InstrucaoRotuladaComposta instrucao : instrucoes) {
+			if (instrucao.getTipo1() == TipoInstrucao.CICLO || instrucao.getTipo2() == TipoInstrucao.CICLO) {
+				possuiAlgumCiclo = true;
+			}
+		}
+
+		// verifica se a ultima instrucao é um ciclo de rotulo sigma
+		if (!instrucoes.get(instrucoes.size() - 1).getRotulo().equals(TipoInstrucao.CICLO.getRotulo(null))) {
+			// cai aqui dentro de não é!
+			precisaAdicionaCicloAoFinal = true;
+		}
+
+		if (precisaAdicionaCicloAoFinal && possuiAlgumCiclo) {
+			// auxiliar usado só para gerar SIGMA do CICLO
+			InstrucaoMonolitica instrucaoMonoliticaAuxiliar = new InstrucaoMonolitica();
+			instrucaoMonoliticaAuxiliar.setTipo(TipoInstrucao.CICLO);
+
+			InstrucaoRotuladaComposta instrucaoComposta = new InstrucaoRotuladaComposta();
+			instrucaoComposta.setRotulo(TipoInstrucao.CICLO.getRotulo(instrucaoMonoliticaAuxiliar));
+			// SET PRA PRIMEIRA COLUNA
+			instrucaoComposta.setInstrucaoRotulada(TipoInstrucao.CICLO.getIdentificador(instrucaoMonoliticaAuxiliar), TipoInstrucao.CICLO.getRotulo(instrucaoMonoliticaAuxiliar), TipoInstrucao.CICLO);
+			// SET PRA SEGUNDA COLUNA
+			instrucaoComposta.setInstrucaoRotulada(TipoInstrucao.CICLO.getIdentificador(instrucaoMonoliticaAuxiliar), TipoInstrucao.CICLO.getRotulo(instrucaoMonoliticaAuxiliar), TipoInstrucao.CICLO);
+			instrucoes.add(instrucaoComposta);
+		}
+
+		return instrucoes;
+
 	}
 
 }

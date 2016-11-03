@@ -8,7 +8,6 @@ import java.util.List;
 import org.junit.Test;
 
 import com.equivalencia.modelo.InstrucaoMonolitica;
-import com.equivalencia.modelo.tipo.TipoInstrucao;
 
 public class InstrucaoMonoliticaTeste {
 

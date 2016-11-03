@@ -1,6 +1,4 @@
-package com.equivalencia.modelo.tipo;
-
-import com.equivalencia.modelo.InstrucaoMonolitica;
+package com.equivalencia.modelo;
 
 public enum TipoInstrucao {
 	TESTE {

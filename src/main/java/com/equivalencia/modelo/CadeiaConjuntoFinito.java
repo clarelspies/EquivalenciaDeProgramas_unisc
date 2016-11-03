@@ -13,15 +13,14 @@ public class CadeiaConjuntoFinito {
 	public CadeiaConjuntoFinito(int numeroUltimoRotulo, String ultimoConjunto, String novosConjuntos) {
 		numeroUltimoRotulo++;
 		this.rotulo = "A" + numeroUltimoRotulo;
-		
-		if(novosConjuntos!=null){
+
+		if (novosConjuntos != null) {
 			this.conjunto = "{" + ultimoConjunto.replace("{", "").replaceAll("}", "") + "," + novosConjuntos + "}";
-		}else{
-			//usado para adicionar o ultimo novamente
+		} else {
+			// usado para adicionar o ultimo novamente
 			this.conjunto = ultimoConjunto;
 		}
-		
-		
+
 	}
 
 	@Override
