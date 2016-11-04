@@ -26,6 +26,29 @@ public class EquivalenciaTeste {
 		assertEquals("6:(G,7)(F,6)", programa.getInstrucoesCompostas2().get(1).toStringComRotulo());
 		assertEquals("7:(F,6)(H,8)", programa.getInstrucoesCompostas2().get(2).toStringComRotulo());
 		assertEquals("8:(PARADA,Σ)(H,8)", programa.getInstrucoesCompostas2().get(3).toStringComRotulo());
+
+		assertEquals("A0:{Σ}", programa.getCadeiaConjuntosFinitos1().get(0).toString());
+		assertEquals("A1:{Σ,4,3}", programa.getCadeiaConjuntosFinitos1().get(1).toString());
+		assertEquals("A2:{Σ,4,3,2}", programa.getCadeiaConjuntosFinitos1().get(2).toString());
+		assertEquals("A3:{Σ,4,3,2,1}", programa.getCadeiaConjuntosFinitos1().get(3).toString());
+		assertEquals("A4:{Σ,4,3,2,1}", programa.getCadeiaConjuntosFinitos1().get(4).toString());
+
+		assertEquals("A0:{Σ}", programa.getCadeiaConjuntosFinitos2().get(0).toString());
+		assertEquals("A1:{Σ,8}", programa.getCadeiaConjuntosFinitos2().get(1).toString());
+		assertEquals("A2:{Σ,8,7}", programa.getCadeiaConjuntosFinitos2().get(2).toString());
+		assertEquals("A3:{Σ,8,7,6}", programa.getCadeiaConjuntosFinitos2().get(3).toString());
+		assertEquals("A4:{Σ,8,7,6,5}", programa.getCadeiaConjuntosFinitos2().get(4).toString());
+		assertEquals("A5:{Σ,8,7,6,5}", programa.getCadeiaConjuntosFinitos2().get(5).toString());
+
+		assertEquals("1:(F,2)(G,4)", programa.getInstrucoesCompostasSimplificadas1().get(0).toStringComRotulo());
+		assertEquals("2:(G,4)(G,4)", programa.getInstrucoesCompostasSimplificadas1().get(1).toStringComRotulo());
+		assertEquals("3:(PARADA,Σ)(PARADA,Σ)", programa.getInstrucoesCompostasSimplificadas1().get(2).toStringComRotulo());
+		assertEquals("4:(PARADA,Σ)(PARADA,Σ)", programa.getInstrucoesCompostasSimplificadas1().get(3).toStringComRotulo());
+
+		assertEquals("5:(F,6)(F,6)", programa.getInstrucoesCompostasSimplificadas2().get(0).toStringComRotulo());
+		assertEquals("6:(G,7)(F,6)", programa.getInstrucoesCompostasSimplificadas2().get(1).toStringComRotulo());
+		assertEquals("7:(F,6)(H,8)", programa.getInstrucoesCompostasSimplificadas2().get(2).toStringComRotulo());
+		assertEquals("8:(PARADA,Σ)(H,8)", programa.getInstrucoesCompostasSimplificadas2().get(3).toStringComRotulo());
 	}
 
 	@Test
@@ -43,6 +66,25 @@ public class EquivalenciaTeste {
 		assertEquals("5:(F,6)(G,7)", programa.getInstrucoesCompostas2().get(1).toStringComRotulo());
 		assertEquals("6:(F,6)(G,7)", programa.getInstrucoesCompostas2().get(2).toStringComRotulo());
 		assertEquals("7:(F,5)(PARADA,Σ)", programa.getInstrucoesCompostas2().get(3).toStringComRotulo());
+
+		assertEquals("A0:{Σ}", programa.getCadeiaConjuntosFinitos1().get(0).toString());
+		assertEquals("A1:{Σ,3,1}", programa.getCadeiaConjuntosFinitos1().get(1).toString());
+		assertEquals("A2:{Σ,3,1,2}", programa.getCadeiaConjuntosFinitos1().get(2).toString());
+		assertEquals("A3:{Σ,3,1,2}", programa.getCadeiaConjuntosFinitos1().get(3).toString());
+
+		assertEquals("A0:{Σ}", programa.getCadeiaConjuntosFinitos2().get(0).toString());
+		assertEquals("A1:{Σ,7,4}", programa.getCadeiaConjuntosFinitos2().get(1).toString());
+		assertEquals("A2:{Σ,7,4,6,5}", programa.getCadeiaConjuntosFinitos2().get(2).toString());
+		assertEquals("A3:{Σ,7,4,6,5}", programa.getCadeiaConjuntosFinitos2().get(3).toString());
+
+		assertEquals("1:(F,2)(PARADA,Σ)", programa.getInstrucoesCompostasSimplificadas1().get(0).toStringComRotulo());
+		assertEquals("2:(F,2)(G,3)", programa.getInstrucoesCompostasSimplificadas1().get(1).toStringComRotulo());
+		assertEquals("3:(F,2)(PARADA,Σ)", programa.getInstrucoesCompostasSimplificadas1().get(2).toStringComRotulo());
+
+		assertEquals("4:(F,5)(PARADA,Σ)", programa.getInstrucoesCompostasSimplificadas2().get(0).toStringComRotulo());
+		assertEquals("5:(F,6)(G,7)", programa.getInstrucoesCompostasSimplificadas2().get(1).toStringComRotulo());
+		assertEquals("6:(F,6)(G,7)", programa.getInstrucoesCompostasSimplificadas2().get(2).toStringComRotulo());
+		assertEquals("7:(F,5)(PARADA,Σ)", programa.getInstrucoesCompostasSimplificadas2().get(3).toStringComRotulo());
 
 	}
 
@@ -76,6 +118,18 @@ public class EquivalenciaTeste {
 		assertEquals("A2:{Σ,7,6}", programa.getCadeiaConjuntosFinitos2().get(2).toString());
 		assertEquals("A3:{Σ,7,6,5,8}", programa.getCadeiaConjuntosFinitos2().get(3).toString());
 		assertEquals("A4:{Σ,7,6,5,8}", programa.getCadeiaConjuntosFinitos2().get(4).toString());
+
+		assertEquals("1:(F,2)(CICLO,ω)", programa.getInstrucoesCompostasSimplificadas1().get(0).toStringComRotulo());
+		assertEquals("2:(G,3)(G,3)", programa.getInstrucoesCompostasSimplificadas1().get(1).toStringComRotulo());
+		assertEquals("3:(F,4)(PARADA,Σ)", programa.getInstrucoesCompostasSimplificadas1().get(2).toStringComRotulo());
+		assertEquals("4:(F,2)(CICLO,ω)", programa.getInstrucoesCompostasSimplificadas1().get(3).toStringComRotulo());
+		assertEquals("ω:(CICLO,ω)(CICLO,ω)", programa.getInstrucoesCompostasSimplificadas1().get(4).toStringComRotulo());
+
+		assertEquals("5:(F,6)(CICLO,ω)", programa.getInstrucoesCompostasSimplificadas2().get(0).toStringComRotulo());
+		assertEquals("6:(G,7)(G,7)", programa.getInstrucoesCompostasSimplificadas2().get(1).toStringComRotulo());
+		assertEquals("7:(F,8)(PARADA,Σ)", programa.getInstrucoesCompostasSimplificadas2().get(2).toStringComRotulo());
+		assertEquals("8:(F,6)(CICLO,ω)", programa.getInstrucoesCompostasSimplificadas2().get(3).toStringComRotulo());
+		assertEquals("ω:(CICLO,ω)(CICLO,ω)", programa.getInstrucoesCompostasSimplificadas2().get(4).toStringComRotulo());
 	}
 
 	@Test
