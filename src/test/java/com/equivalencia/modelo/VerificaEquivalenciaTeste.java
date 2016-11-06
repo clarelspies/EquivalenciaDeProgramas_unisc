@@ -8,14 +8,14 @@ import org.junit.Test;
 
 import com.equivalencia.mock.MOCKInstrucaoMonoliticaEntradaUsuario;
 
-public class EquivalenciaTeste {
+public class VerificaEquivalenciaTeste {
 
 	@Test
 	public void teste_equivalencia_1() throws Exception {
 		List<InstrucaoMonolitica> instrucoesMonoliticas1 = InstrucaoMonolitica.criaListaInstrucoesMonoliticasParaPrograma(MOCKInstrucaoMonoliticaEntradaUsuario.teste1_programa1());
 		List<InstrucaoMonolitica> instrucoesMonoliticas2 = InstrucaoMonolitica.criaListaInstrucoesMonoliticasParaPrograma(MOCKInstrucaoMonoliticaEntradaUsuario.teste1_programa2());
 
-		Equivalencia programa = new Equivalencia(instrucoesMonoliticas1, instrucoesMonoliticas2);
+		VerificaEquivalencia programa = new VerificaEquivalencia(instrucoesMonoliticas1, instrucoesMonoliticas2);
 
 		assertEquals("1:(F,2)(G,4)", programa.getInstrucoesCompostas1().get(0).toStringComRotulo());
 		assertEquals("2:(G,4)(G,4)", programa.getInstrucoesCompostas1().get(1).toStringComRotulo());
@@ -49,6 +49,14 @@ public class EquivalenciaTeste {
 		assertEquals("6:(G,7)(F,6)", programa.getInstrucoesCompostasSimplificadas2().get(1).toStringComRotulo());
 		assertEquals("7:(F,6)(H,8)", programa.getInstrucoesCompostasSimplificadas2().get(2).toStringComRotulo());
 		assertEquals("8:(PARADA,Σ)(H,8)", programa.getInstrucoesCompostasSimplificadas2().get(3).toStringComRotulo());
+
+		assertEquals("B0:{(1,5)}", programa.getParesDeRotulos().get(0).toString());
+		assertEquals("B1:{(2,6),(4,6)}", programa.getParesDeRotulos().get(1).toString());
+		assertEquals("B2:{(4,7),(4,6)}", programa.getParesDeRotulos().get(2).toString());
+
+		assertEquals(false, programa.getResultado().isSaoEquivalentes());
+		assertEquals(false, programa.isHouveSimplificacao());
+		System.out.println(programa.getResultado().getMensagem());
 	}
 
 	@Test
@@ -56,7 +64,7 @@ public class EquivalenciaTeste {
 		List<InstrucaoMonolitica> instrucoesMonoliticas1 = InstrucaoMonolitica.criaListaInstrucoesMonoliticasParaPrograma(MOCKInstrucaoMonoliticaEntradaUsuario.teste2_programa1());
 		List<InstrucaoMonolitica> instrucoesMonoliticas2 = InstrucaoMonolitica.criaListaInstrucoesMonoliticasParaPrograma(MOCKInstrucaoMonoliticaEntradaUsuario.teste2_programa2());
 
-		Equivalencia programa = new Equivalencia(instrucoesMonoliticas1, instrucoesMonoliticas2);
+		VerificaEquivalencia programa = new VerificaEquivalencia(instrucoesMonoliticas1, instrucoesMonoliticas2);
 
 		assertEquals("1:(F,2)(PARADA,Σ)", programa.getInstrucoesCompostas1().get(0).toStringComRotulo());
 		assertEquals("2:(F,2)(G,3)", programa.getInstrucoesCompostas1().get(1).toStringComRotulo());
@@ -86,6 +94,14 @@ public class EquivalenciaTeste {
 		assertEquals("6:(F,6)(G,7)", programa.getInstrucoesCompostasSimplificadas2().get(2).toStringComRotulo());
 		assertEquals("7:(F,5)(PARADA,Σ)", programa.getInstrucoesCompostasSimplificadas2().get(3).toStringComRotulo());
 
+		assertEquals("B0:{(1,4)}", programa.getParesDeRotulos().get(0).toString());
+		assertEquals("B1:{(2,5),(Σ,Σ)}", programa.getParesDeRotulos().get(1).toString());
+		assertEquals("B2:{(2,6),(3,7)}", programa.getParesDeRotulos().get(2).toString());
+		assertEquals("B3:Ø", programa.getParesDeRotulos().get(3).toString());
+
+		assertEquals(true, programa.getResultado().isSaoEquivalentes());
+		assertEquals(false, programa.isHouveSimplificacao());
+		System.out.println(programa.getResultado().getMensagem());
 	}
 
 	@Test
@@ -93,7 +109,7 @@ public class EquivalenciaTeste {
 		List<InstrucaoMonolitica> instrucoesMonoliticas1 = InstrucaoMonolitica.criaListaInstrucoesMonoliticasParaPrograma(MOCKInstrucaoMonoliticaEntradaUsuario.teste3_programa1());
 		List<InstrucaoMonolitica> instrucoesMonoliticas2 = InstrucaoMonolitica.criaListaInstrucoesMonoliticasParaPrograma(MOCKInstrucaoMonoliticaEntradaUsuario.teste3_programa2());
 
-		Equivalencia programa = new Equivalencia(instrucoesMonoliticas1, instrucoesMonoliticas2);
+		VerificaEquivalencia programa = new VerificaEquivalencia(instrucoesMonoliticas1, instrucoesMonoliticas2);
 
 		assertEquals("1:(F,2)(CICLO,ω)", programa.getInstrucoesCompostas1().get(0).toStringComRotulo());
 		assertEquals("2:(G,3)(G,3)", programa.getInstrucoesCompostas1().get(1).toStringComRotulo());
@@ -130,6 +146,16 @@ public class EquivalenciaTeste {
 		assertEquals("7:(F,8)(PARADA,Σ)", programa.getInstrucoesCompostasSimplificadas2().get(2).toStringComRotulo());
 		assertEquals("8:(F,6)(CICLO,ω)", programa.getInstrucoesCompostasSimplificadas2().get(3).toStringComRotulo());
 		assertEquals("ω:(CICLO,ω)(CICLO,ω)", programa.getInstrucoesCompostasSimplificadas2().get(4).toStringComRotulo());
+
+		assertEquals("B0:{(1,5)}", programa.getParesDeRotulos().get(0).toString());
+		assertEquals("B1:{(2,6),(ω,ω)}", programa.getParesDeRotulos().get(1).toString());
+		assertEquals("B2:{(3,7),(3,7)}", programa.getParesDeRotulos().get(2).toString());
+		assertEquals("B3:{(4,8),(Σ,Σ)}", programa.getParesDeRotulos().get(3).toString());
+		assertEquals("B4:Ø", programa.getParesDeRotulos().get(4).toString());
+
+		assertEquals(true, programa.getResultado().isSaoEquivalentes());
+		assertEquals(false, programa.isHouveSimplificacao());
+		System.out.println(programa.getResultado().getMensagem());
 	}
 
 	@Test
@@ -137,7 +163,7 @@ public class EquivalenciaTeste {
 		List<InstrucaoMonolitica> instrucoesMonoliticas1 = InstrucaoMonolitica.criaListaInstrucoesMonoliticasParaPrograma(MOCKInstrucaoMonoliticaEntradaUsuario.teste4_programa1());
 		List<InstrucaoMonolitica> instrucoesMonoliticas2 = InstrucaoMonolitica.criaListaInstrucoesMonoliticasParaPrograma(MOCKInstrucaoMonoliticaEntradaUsuario.teste4_programa2());
 
-		Equivalencia programa = new Equivalencia(instrucoesMonoliticas1, instrucoesMonoliticas2);
+		VerificaEquivalencia programa = new VerificaEquivalencia(instrucoesMonoliticas1, instrucoesMonoliticas2);
 
 		assertEquals("1:(G,2)(F,3)", programa.getInstrucoesCompostas1().get(0).toStringComRotulo());
 		assertEquals("2:(G,2)(F,3)", programa.getInstrucoesCompostas1().get(1).toStringComRotulo());
@@ -184,6 +210,16 @@ public class EquivalenciaTeste {
 		assertEquals("12:(PARADA,Σ)(CICLO,ω)", programa.getInstrucoesCompostasSimplificadas2().get(4).toStringComRotulo());
 		assertEquals("ω:(CICLO,ω)(CICLO,ω)", programa.getInstrucoesCompostasSimplificadas2().get(5).toStringComRotulo());
 
+		assertEquals("B0:{(1,8)}", programa.getParesDeRotulos().get(0).toString());
+		assertEquals("B1:{(2,9),(3,10)}", programa.getParesDeRotulos().get(1).toString());
+		assertEquals("B2:{(4,10),(5,11)}", programa.getParesDeRotulos().get(2).toString());
+		assertEquals("B3:{(6,12),(ω,ω)}", programa.getParesDeRotulos().get(3).toString());
+		assertEquals("B4:{(Σ,Σ),(ω,ω)}", programa.getParesDeRotulos().get(4).toString());
+		assertEquals("B5:Ø", programa.getParesDeRotulos().get(5).toString());
+
+		assertEquals(true, programa.getResultado().isSaoEquivalentes());
+		assertEquals(true, programa.isHouveSimplificacao());
+		System.out.println(programa.getResultado().getMensagem());
 	}
 
 }

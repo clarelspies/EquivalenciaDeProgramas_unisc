@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.equivalencia.modelo.CadeiaConjuntoFinito;
+import com.equivalencia.modelo.ParesDeRotulos;
+import com.equivalencia.modelo.ResultadoEquivalencia;
 import com.equivalencia.modelo.InstrucaoMonolitica;
 import com.equivalencia.modelo.InstrucaoRotuladaComposta;
 import com.equivalencia.modelo.TipoInstrucao;
@@ -332,6 +334,115 @@ public class Utilitario {
 		}
 
 		return instrucoes;
+
+	}
+
+	// 4 passo, verifica a equivalencia dos programas
+	// união passada por ponteiro/referencia
+	public static ResultadoEquivalencia verificaEquivalenciaProgramas(List<ParesDeRotulos> paresDeRotulo, List<InstrucaoRotuladaComposta> instrucoesSimplificadas1, List<InstrucaoRotuladaComposta> instrucoesSimplificadas2) {
+		ResultadoEquivalencia resultado = new ResultadoEquivalencia();
+		resultado.setSaoEquivalentes(true);
+
+		// java trabalha com ponteiros/referencia
+		List<InstrucaoRotuladaComposta> simplificadas1 = new ArrayList<>(instrucoesSimplificadas1);
+		List<InstrucaoRotuladaComposta> verificadas1 = new ArrayList<>();
+
+		List<InstrucaoRotuladaComposta> simplificadas2 = new ArrayList<>(instrucoesSimplificadas2);
+		List<InstrucaoRotuladaComposta> verificadas2 = new ArrayList<>();
+
+		// ADICIONA OS PRIMEIROS ROTULOS DE CADA PROGRAMA!
+		paresDeRotulo.add(new ParesDeRotulos(simplificadas1.get(0), simplificadas2.get(0)));
+
+		// percorre a lista comparando!
+
+		// 1 - compara as instrucoes 1 de cada instrucaocomposta
+		int maximo1 = instrucoesSimplificadas1.size();
+		int maximo2 = instrucoesSimplificadas2.size();
+
+		int contadorPrograma1 = 0;
+		int contadorPrograma2 = 0;
+
+		// pego os que serão testados.
+		while (contadorPrograma1 < maximo1 && contadorPrograma2 < maximo2) {
+			// verifica qual e o proximo rotulo valido para ser comparador
+			InstrucaoRotuladaComposta instrucao1 = proximoRotuloSeraComparado(simplificadas1, verificadas1);
+			InstrucaoRotuladaComposta instrucao2 = proximoRotuloSeraComparado(simplificadas2, verificadas2);
+
+			// se as duas sao nulas, acabou as intrucoes para testar!
+			if (instrucao1 == null && instrucao2 == null) {
+				break;
+			}
+
+			// se uma e null e a outra nao, chega aqui e significa que programas nao sao equivalentes!
+			if (instrucao1 == null || instrucao2 == null) {
+				if (instrucao1 != null) {
+					resultado.setMensagem("Não há instrução para testar com " + instrucao1.toStringComRotulo());
+				} else {
+					resultado.setMensagem("Não há instrução para testar com " + instrucao2.toStringComRotulo());
+				}
+
+				resultado.setSaoEquivalentes(false);
+				break;
+			}
+
+			// testa se rotulos são equivalentes
+			if (instrucao1.getTipo1() == instrucao2.getTipo1() && instrucao1.getTipo2() == instrucao2.getTipo2()) {
+				// adiciona os pares de rotulos
+				paresDeRotulo.add(new ParesDeRotulos(paresDeRotulo.size(), instrucao1, instrucao2));
+			} else {
+				// se os tipos nao sao iguais, nao sao equivalentes
+				
+				resultado.setMensagem("Os programas não são equivalentes em:\n" + instrucao1.toStringComRotulo() + "\n" + instrucao2.toStringComRotulo());
+				resultado.setSaoEquivalentes(false);
+				break;
+			}
+
+			contadorPrograma1++;
+			contadorPrograma2++;
+		}
+
+		// adiciona o rotulo vazio ao final se forem equivalentes
+		if (resultado.isSaoEquivalentes()) {
+			paresDeRotulo.add(new ParesDeRotulos(paresDeRotulo.size()));
+			resultado.setMensagem("Os programas são fortemente equivalentes!");
+		}
+
+		return resultado;
+	}
+
+	// recebe a lista de rotulos atuais, e a lista de rotulos q ja foram comparados.. e define qual será o proximo a ser comparado
+	public static InstrucaoRotuladaComposta proximoRotuloSeraComparado(List<InstrucaoRotuladaComposta> simplificadas, List<InstrucaoRotuladaComposta> verificadas) {
+
+		int contador = 0;
+		for (InstrucaoRotuladaComposta instrucao : simplificadas) {
+			// se a instrucao for diferente de null, é a proxima a ser testada.
+			// nao testa ciclos com rotulo SIGMA
+			if (instrucao != null && !instrucao.getRotulo().equals(TipoInstrucao.CICLO.getRotulo(null))) {
+
+				boolean jaFoiVerificada = false;
+				// testa se a instrucao ja foi verificada
+				for (InstrucaoRotuladaComposta instrucaoVerificada : verificadas) {
+					// se elas forem iguais, sem contar rotulo da lista.. entao ja foi verificada.
+					if (instrucao.toString().equals(instrucaoVerificada.toString())) {
+						jaFoiVerificada = true;
+					}
+				}
+
+				// coloca na lista de ja testadas
+				verificadas.add(instrucao);
+				// tiro da lista de instrucoes que faltam ser testadas
+				simplificadas.set(contador, null);
+
+				if (!jaFoiVerificada) {
+					return instrucao;
+				}
+
+			}
+
+			contador++;
+		}
+
+		return null;
 
 	}
 

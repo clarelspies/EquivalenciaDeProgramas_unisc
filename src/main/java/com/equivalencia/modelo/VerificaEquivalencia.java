@@ -1,10 +1,11 @@
 package com.equivalencia.modelo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.equivalencia.utilitarios.Utilitario;
 
-public class Equivalencia {
+public class VerificaEquivalencia {
 
 	List<InstrucaoMonolitica> instrucoesMonoliticasPrograma1;
 	List<InstrucaoMonolitica> instrucoesMonoliticasPrograma2;
@@ -19,8 +20,12 @@ public class Equivalencia {
 	List<InstrucaoRotuladaComposta> instrucoesCompostasSimplificadas1;
 	List<InstrucaoRotuladaComposta> instrucoesCompostasSimplificadas2;
 
+	List<ParesDeRotulos> paresDeRotulos;
+	private boolean houveSimplificacao = false;
+	private ResultadoEquivalencia resultado;
+
 	// instancia do programa, a partir da entrada de instrucoes monolitcas do usuario em formato STRING/TEXTO
-	public Equivalencia(List<InstrucaoMonolitica> programa1, List<InstrucaoMonolitica> programa2) throws Exception {
+	public VerificaEquivalencia(List<InstrucaoMonolitica> programa1, List<InstrucaoMonolitica> programa2) throws Exception {
 		Utilitario utilitario = new Utilitario();
 
 		// informas as instrucoes monoliticas
@@ -45,6 +50,7 @@ public class Equivalencia {
 		// 3 passo, simplificação (nem sempre é necessário)
 		// verifica para o programa 1 se teve rotulos fora do limite do programa e simplifica se necessário
 		if (rotulosAlemLimitePrograma1.size() > 0) {
+			this.houveSimplificacao = true;
 			this.instrucoesCompostasSimplificadas1 = Utilitario.executaSimplificacao(this.instrucoesCompostas1, rotulosAlemLimitePrograma1);
 		} else {
 			this.instrucoesCompostasSimplificadas1 = this.instrucoesCompostas1;
@@ -52,11 +58,16 @@ public class Equivalencia {
 
 		// verifica para o programa 2 se teve rotulos fora do limite do programa e simplifica se necessário
 		if (rotulosAlemLimitePrograma2.size() > 0) {
+			this.houveSimplificacao = true;
 			this.instrucoesCompostasSimplificadas2 = Utilitario.executaSimplificacao(this.instrucoesCompostas2, rotulosAlemLimitePrograma2);
 		} else {
 			this.instrucoesCompostasSimplificadas2 = this.instrucoesCompostas2;
 		}
 
+		this.paresDeRotulos = new ArrayList<>();
+
+		// mensagem e pares de rotulos sao recebidos por ponteiros/referencia
+		this.resultado = Utilitario.verificaEquivalenciaProgramas(this.paresDeRotulos, this.instrucoesCompostasSimplificadas1, this.instrucoesCompostasSimplificadas2);
 	}
 
 	public List<InstrucaoMonolitica> getInstrucoesMonoliticasPrograma1() {
@@ -89,6 +100,18 @@ public class Equivalencia {
 
 	public List<InstrucaoRotuladaComposta> getInstrucoesCompostasSimplificadas2() {
 		return instrucoesCompostasSimplificadas2;
+	}
+
+	public List<ParesDeRotulos> getParesDeRotulos() {
+		return paresDeRotulos;
+	}
+
+	public ResultadoEquivalencia getResultado() {
+		return resultado;
+	}
+
+	public boolean isHouveSimplificacao() {
+		return houveSimplificacao;
 	}
 
 }
