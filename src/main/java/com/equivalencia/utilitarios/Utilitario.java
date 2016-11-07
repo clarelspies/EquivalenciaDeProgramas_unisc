@@ -15,6 +15,18 @@ public class Utilitario {
 	private int contadorRotuloMonolitico = 1;
 	private int contadorRotuloComposto = 1;
 
+	public static List<String> textoParaListaString(String texto) {
+		List<String> lista = new ArrayList<>();
+
+		String entradas[] = texto.split(System.lineSeparator());
+
+		for (String s : entradas) {
+			lista.add(s);
+		}
+
+		return lista;
+	}
+
 	// rotula as operacoes das intrucoes monoliticas, conforme serão executadas em instrucoes compostas
 	public List<InstrucaoMonolitica> rotulaOperacoesEmOrdemExecucao(List<InstrucaoMonolitica> instrucoes) {
 		List<Integer> listaOrdemExecucaoOperacoes = new ArrayList<>();
@@ -391,7 +403,7 @@ public class Utilitario {
 				paresDeRotulo.add(new ParesDeRotulos(paresDeRotulo.size(), instrucao1, instrucao2));
 			} else {
 				// se os tipos nao sao iguais, nao sao equivalentes
-				
+
 				resultado.setMensagem("Os programas não são equivalentes em:\n" + instrucao1.toStringComRotulo() + "\n" + instrucao2.toStringComRotulo());
 				resultado.setSaoEquivalentes(false);
 				break;
