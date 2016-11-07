@@ -8,6 +8,7 @@ package com.equivalencia.gui;
 import com.equivalencia.modelo.CadeiaConjuntoFinito;
 import com.equivalencia.modelo.InstrucaoMonolitica;
 import com.equivalencia.modelo.InstrucaoRotuladaComposta;
+import com.equivalencia.modelo.ParesDeRotulos;
 import com.equivalencia.modelo.VerificaEquivalencia;
 import com.equivalencia.utilitarios.Utilitario;
 import java.awt.Desktop;
@@ -239,8 +240,14 @@ public class Tela extends javax.swing.JFrame {
 					this.simplificadas2.setText(this.simplificadas2.getText() + "\n" + intrucao.toStringComRotulo());
 				}
 			}
+			
+		
 
-			this.resultado.setText(equivalencia.getResultado().getMensagem());
+			this.resultado.setText(equivalencia.getResultado().getMensagem()+"\n");
+			
+			for(ParesDeRotulos par:equivalencia.getParesDeRotulos()){
+				this.resultado.setText(this.resultado.getText()+"\n"+par.toString());
+			}
 
 		} catch (Exception ex) {
 			resultado.setText("Entradas monolíticas em formato inválido!");
