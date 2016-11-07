@@ -1,0 +1,11 @@
+Se T1 va-para 2 senao-va-para 3
+FACA G VA-PARA 1
+FACA F VA-PARA 4
+Se T2 va-para 5 senao-va-para 6
+FACA F VA-PARA 4
+FACA G VA-PARA 7
+se t3 VA-PARA 8 senao-va-para 9
+FACA F va-para 10
+se t4 VA-PARA 13 senao-va-para 7
+se t5 VA-PARA 13 senao-va-para 11
+FACA G va-para 11
