@@ -123,7 +123,7 @@ Esta etapa é necessária apenas quando no passo anterior é verificado que 1 ou
 ```
 
 ### Passo 4 - Verificação da Equivalência
-Esta é a etapa final
+Esta é a etapa final, onde os rótulos de cada programa são comparados com o outro programa no mesmo ponto de execução. Caso seja identificado por exemplo, no programa 1 a execução de um TESTE e no programa 2 a execução de um CICLO no mesmo ponto, entende-se que os programas não são equivalentes e finaliza-se o teste. Do contrário, testa todos os rótulos até a PARADA para confirmar a equivalência.
 
 #### Resultado
 ```bash
