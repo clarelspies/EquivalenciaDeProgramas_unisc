@@ -121,3 +121,18 @@ Esta etapa é necessária apenas quando no passo anterior é verificado que 1 ou
 12:(PARADA,Σ)(CICLO,ω)
 ω:(CICLO,ω)(CICLO,ω)
 ```
+
+### Passo 4 - Verificação da Equivalência
+Esta é a etapa final
+
+#### Resultado
+```bash
+Os programas são fortemente equivalentes!
+
+B0:{(1,8)}
+B1:{(2,9),(3,10)}
+B2:{(4,10),(5,11)}
+B3:{(6,12),(ω,ω)}
+B4:{(Σ,Σ),(ω,ω)}
+B5:Ø
+```
