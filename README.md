@@ -136,3 +136,9 @@ B3:{(6,12),(ω,ω)}
 B4:{(Σ,Σ),(ω,ω)}
 B5:Ø
 ```
+
+
+# Código Fonte
+
+O código fonte esta disponível em licença aberta para estudo e modificação desde que seja citado o link do projeto no Github e o autor nas referências.
+O código está comentado e possui alguns testes automatizados para melhor entendimento da aplicação.
