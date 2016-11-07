@@ -19,25 +19,105 @@ Nos arquivos de instruções e na área de texto devemos cuidar para que não so
 
 Para a nomenclatura de testes, espera-se que ele inicie com o a letra "T" e para as operações qualquer caractére diferente de "T".
 
-## Programa para teste1
+## entradas no formato de um programa monolítico
 #### Programa 1
 ```bash
-SE T1 VA-PARA 2 SENAO-VA-PARA 3
-FACA F VA-PARA 6
-SE T2 VA-PARA 5 SENAO-VA-PARA 4
+Se T1 va-para 2 senao-va-para 3
+FACA G VA-PARA 1
+FACA F VA-PARA 4
+Se T2 va-para 5 senao-va-para 6
+FACA F VA-PARA 4
 FACA G VA-PARA 7
-FACA F VA-PARA 7
-SE T3 VA-PARA 4 SENAO-VA-PARA 1
+se t3 VA-PARA 8 senao-va-para 9
+FACA F va-para 10
+se t4 VA-PARA 13 senao-va-para 7
+se t5 VA-PARA 13 senao-va-para 11
+FACA G va-para 11
 ```
 
 #### Programa 2
 ```bash
-FACA F VA-PARA 2
-SE T1 VA-PARA 3 SENAO-VA-PARA 1
-FACA G VA-PARA 4
-SE T2 VA-PARA 1 SENAO-VA-PARA 5
-FACA H VA-PARA 6
-SE T3 VA-PARA 7 SENAO-VA-PARA 5
+Se T1 va-para 2 senao-va-para 3
+FACA G VA-PARA 1
+FACA F VA-PARA 4
+Se T2 va-para 3 senao-va-para 5
+FACA G VA-PARA 6
+Se T3 va-para 7 senao-va-para 8
+FACA F VA-PARA 9
+FACA F VA-PARA 8
+Se T4 va-para 10 senao-va-para 6
 ```
 
+Quando clicado no botão "iniciar", se as intruções estiverem todas no formato aceito serão executados os seguintes passos:
 
+### Passo 1 - Definição das Instruções Rotuladas Compostas
+O primeiro passo é passar as instruções para o formato de instruções rotuladas compostas, neste formato independente se a instrução é teste ou operação, elas terão o mesmo formato.
+
+#### Programa 1
+```bash
+1:(G,2)(F,3)
+2:(G,2)(F,3)
+3:(F,4)(G,5)
+4:(F,4)(G,5)
+5:(F,6)(CICLO,ω)
+6:(PARADA,Σ)(G,7)
+7:(G,7)(G,7)
+ω:(CICLO,ω)(CICLO,ω)
+```
+
+#### Programa 2
+```bash
+8:(G,9)(F,10)
+9:(G,9)(F,10)
+10:(F,10)(G,11)
+11:(F,12)(F,13)
+12:(PARADA,Σ)(F,13)
+13:(F,13)(F,13)
+```
+
+### Passo 2 - Definição da Cadeia de Conjuntos Finitos
+Neste momento é definida a cadeia de conjuntos finitos, para verificarmos se algum rótulo ficou fora do limite do programa
+
+#### Programa 1
+```bash
+A0:{Σ}
+A1:{Σ,6}
+A2:{Σ,6,5}
+A3:{Σ,6,5,4,3}
+A4:{Σ,6,5,4,3,2,1}
+A5:{Σ,6,5,4,3,2,1}
+```
+
+#### Programa 2
+```bash
+A0:{Σ}
+A1:{Σ,12}
+A2:{Σ,12,11}
+A3:{Σ,12,11,10}
+A4:{Σ,12,11,10,9,8}
+A5:{Σ,12,11,10,9,8}
+```
+
+### Passo 3 - Simplificação
+Esta etapa é necessária apenas quando no passo anterior é verificado que 1 ou mais rótulos ficaram além do limite do programa, para resolver este problema, substitui-se as referências a estes rótulos pos ciclos infinitos.
+
+#### Programa 1
+```bash
+1:(G,2)(F,3)
+2:(G,2)(F,3)
+3:(F,4)(G,5)
+4:(F,4)(G,5)
+5:(F,6)(CICLO,ω)
+6:(PARADA,Σ)(CICLO,ω)
+ω:(CICLO,ω)(CICLO,ω)
+```
+
+#### Programa 2
+```bash
+8:(G,9)(F,10)
+9:(G,9)(F,10)
+10:(F,10)(G,11)
+11:(F,12)(CICLO,ω)
+12:(PARADA,Σ)(CICLO,ω)
+ω:(CICLO,ω)(CICLO,ω)
+```
